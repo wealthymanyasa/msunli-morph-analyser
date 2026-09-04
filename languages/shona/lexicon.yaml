@@ -30,6 +30,27 @@ lexicon:
       noun_class: "1"
       number: singular
 
+  - surface: nhu
+    lemma: munhu
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+
+  - surface: sikana
+    lemma: musikana
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+
+  - surface: kuru
+    lemma: mukuru
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+
   # ── Class 1a (zero-prefix kinship) ──────────────────────────────────────
   - surface: mai
     lemma: mai
@@ -68,6 +89,27 @@ lexicon:
       noun_class: "5"
       number: singular
 
+  - surface: banga
+    lemma: banga
+    pos: noun
+    features:
+      noun_class: "5"
+      number: singular
+
+  - surface: zita
+    lemma: zita
+    pos: noun
+    features:
+      noun_class: "5"
+      number: singular
+
+  - surface: doro
+    lemma: doro
+    pos: noun
+    features:
+      noun_class: "5"
+      number: singular
+
   # ── Class 7/8 (often inanimate/object; also languages) ──────────────────
   - surface: koro
     lemma: chikoro
@@ -78,6 +120,26 @@ lexicon:
 
   - surface: shona
     lemma: chiShona
+    pos: noun
+    features:
+      noun_class: "7"
+
+  - surface: garo
+    lemma: chigaro
+    pos: noun
+    features:
+      noun_class: "7"
+      number: singular
+
+  - surface: pfeko
+    lemma: chipfeko
+    pos: noun
+    features:
+      noun_class: "7"
+      number: singular
+
+  - surface: rungu
+    lemma: chiRungu
     pos: noun
     features:
       noun_class: "7"
@@ -98,6 +160,13 @@ lexicon:
       noun_class: "14"
       number: singular
 
+  - surface: she
+    lemma: ushe
+    pos: noun
+    features:
+      noun_class: "14"
+      number: singular
+
   # ── Verbal stems (representative) ───────────────────────────────────────
   - surface: enda
     lemma: enda
@@ -111,5 +180,40 @@ lexicon:
 
   - surface: bika
     lemma: bika
+    pos: verb
+    features: {}
+
+  - surface: taura
+    lemma: taura
+    pos: verb
+    features: {}
+
+  - surface: famba
+    lemma: famba
+    pos: verb
+    features: {}
+
+  - surface: verenga
+    lemma: verenga
+    pos: verb
+    features: {}
+
+  - surface: rara
+    lemma: rara
+    pos: verb
+    features: {}
+
+  - surface: shanda
+    lemma: shanda
+    pos: verb
+    features: {}
+
+  - surface: ita
+    lemma: ita
+    pos: verb
+    features: {}
+
+  - surface: nwa
+    lemma: nwa
     pos: verb
     features: {}

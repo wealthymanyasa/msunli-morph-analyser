@@ -74,8 +74,7 @@ def _validate_one(expectation: dict[str, Any], result: AnalysisResult) -> None:
         # Find at least one candidate that matches every assertion group.
         for asserted in expected_analyses:
             matched = any(
-                _candidate_matches(asserted, cand)
-                for cand in result.analyses
+                _candidate_matches(asserted, cand) for cand in result.analyses
             )
             if not matched:
                 raise ExpectationMismatchError(
@@ -103,10 +102,7 @@ def _candidate_matches(
                 return False
     if "morphemes" in asserted:
         expected_morphemes = asserted["morphemes"]
-        actual = [
-            {"surface": m.surface, "type": m.type}
-            for m in candidate.morphemes
-        ]
+        actual = [{"surface": m.surface, "type": m.type} for m in candidate.morphemes]
         if actual != expected_morphemes:
             return False
     return True

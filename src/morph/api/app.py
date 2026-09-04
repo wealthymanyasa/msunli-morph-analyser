@@ -11,11 +11,15 @@ schemas in :mod:`morph.api.schemas`.
 
 from __future__ import annotations
 
+import logging
+import os
+import time
 from pathlib import Path
 from typing import Any
 
 from fastapi import Depends, FastAPI, HTTPException, Request, status
 
+from morph.api.middleware import RequestLoggingMiddleware
 from morph.api.schemas import (
     API_PREFIX,
     AnalyzeRequest,
@@ -27,6 +31,11 @@ from morph.api.schemas import (
 from morph.domain.analysis import AnalysisResult
 from morph.service.analysis import AnalysisService, UnknownLanguageError
 from morph.service.bootstrap import build_service
+from morph.version import __version__
+
+logger = logging.getLogger("morph.api")
+
+_APP_START_TIME = time.time()
 
 _TAG_ANALYZE = "analyze"
 _TAG_LANGUAGES = "languages"
@@ -66,10 +75,11 @@ def create_app(
             "analysis. Language packs are registered dynamically — the API never "
             "hard-codes a specific language."
         ),
-        version="1.0.0",
+        version=__version__,
         openapi_url=f"{API_PREFIX}/openapi.json",
         docs_url="/docs",
     )
+    app.add_middleware(RequestLoggingMiddleware)
     app.state.service = service
 
     _register_routes(app)
@@ -89,8 +99,27 @@ def _register_routes(app: FastAPI) -> None:
             }
         },
     )
-    def health() -> dict[str, Any]:
-        return {"status": "ok"}
+    def health(
+        service: AnalysisService = Depends(_get_service),
+    ) -> dict[str, Any]:
+        languages = []
+        for code in service.languages():
+            pack = service.get_pack(code)
+            languages.append(
+                {
+                    "code": code,
+                    "version": pack.metadata.version if pack else None,
+                }
+            )
+        commit = os.environ.get("MORPH_GIT_COMMIT", "unknown")
+        return {
+            "status": "ok",
+            "version": __version__,
+            "commit": commit,
+            "uptime_seconds": round(time.time() - _APP_START_TIME, 1),
+            "languages_count": len(languages),
+            "languages": languages,
+        }
 
     @app.get(
         f"{API_PREFIX}/languages",
@@ -140,9 +169,7 @@ def _register_routes(app: FastAPI) -> None:
         service: AnalysisService = Depends(_get_service),
     ) -> BatchAnalyzeResponse:
         _ensure_language(service, payload.language)
-        results = [
-            service.analyze(word, payload.language) for word in payload.words
-        ]
+        results = [service.analyze(word, payload.language) for word in payload.words]
         return BatchAnalyzeResponse(
             language=payload.language,
             results=results,

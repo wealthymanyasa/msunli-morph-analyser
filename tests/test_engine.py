@@ -171,9 +171,7 @@ def test_constraint_validator_required_features(
         surface="kats",
         features={"number": "singular"},
         morphemes=[
-            Morpheme(
-                surface="kats", type="root", features={"number": "singular"}
-            )
+            Morpheme(surface="kats", type="root", features={"number": "singular"})
         ],
     )
     pack = sample_pack.model_copy(

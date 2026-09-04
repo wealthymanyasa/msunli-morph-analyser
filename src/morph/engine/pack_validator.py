@@ -36,9 +36,7 @@ class PackValidationError(Exception):
     ) -> None:
         self.errors: list[str] = errors or []
         super().__init__(
-            message
-            if not self.errors
-            else f"{message}: {'; '.join(self.errors)}"
+            message if not self.errors else f"{message}: {'; '.join(self.errors)}"
         )
 
 
@@ -156,8 +154,6 @@ class LanguagePackValidator:
         ]
 
 
-def validate_language_pack(
-    data: dict[str, Any], engine_major: int = 1
-) -> LanguagePack:
+def validate_language_pack(data: dict[str, Any], engine_major: int = 1) -> LanguagePack:
     """Functional entry point for validating a language pack."""
     return LanguagePackValidator(engine_major=engine_major).validate(data)

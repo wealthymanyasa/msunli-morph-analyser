@@ -6,6 +6,10 @@ import argparse
 
 
 def main() -> None:
+    from morph.logging import configure_logging
+
+    configure_logging()
+
     parser = argparse.ArgumentParser(description="Run the Morphological Analyser API")
     parser.add_argument("--host", default="127.0.0.1", help="Bind host")
     parser.add_argument("--port", default=8000, type=int, help="Bind port")

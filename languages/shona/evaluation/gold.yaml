@@ -1,0 +1,1343 @@
+- surface: murume
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: murume
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: rume
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: varume
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: murume
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: rume
+      type: stem
+    features:
+      noun_class: '2'
+      number: plural
+- surface: mukadzi
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: mukadzi
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: kadzi
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: vakadzi
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: mukadzi
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: kadzi
+      type: stem
+    features:
+      noun_class: '2'
+      number: plural
+- surface: mukomana
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: mukomana
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: komana
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: vakomana
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: mukomana
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: komana
+      type: stem
+    features:
+      noun_class: '2'
+      number: plural
+- surface: munhu
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: munhu
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: nhu
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: vanhu
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: munhu
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: nhu
+      type: stem
+    features:
+      noun_class: '2'
+      number: plural
+- surface: musikana
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: musikana
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: sikana
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: vasikana
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: musikana
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: sikana
+      type: stem
+    features:
+      noun_class: '2'
+      number: plural
+- surface: mukuru
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: mukuru
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: kuru
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: vakuru
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: mukuru
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: kuru
+      type: stem
+    features:
+      noun_class: '2'
+      number: plural
+- surface: mai
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: mai
+    pos: noun
+    morphemes:
+    - surface: ''
+      type: noun-class-1a
+    - surface: mai
+      type: stem
+    features:
+      noun_class: 1a
+      number: singular
+- surface: baba
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: baba
+    pos: noun
+    morphemes:
+    - surface: ''
+      type: noun-class-1a
+    - surface: baba
+      type: stem
+    features:
+      noun_class: 1a
+      number: singular
+- surface: muti
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: muti
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-3
+    - surface: ti
+      type: stem
+    features:
+      noun_class: '3'
+      number: singular
+- surface: miti
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: muti
+    pos: noun
+    morphemes:
+    - surface: mi
+      type: noun-class-4
+    - surface: ti
+      type: stem
+    features:
+      noun_class: '4'
+      number: plural
+- surface: mupata
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: mupata
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-3
+    - surface: pata
+      type: stem
+    features:
+      noun_class: '3'
+      number: singular
+- surface: mipata
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: mupata
+    pos: noun
+    morphemes:
+    - surface: mi
+      type: noun-class-4
+    - surface: pata
+      type: stem
+    features:
+      noun_class: '4'
+      number: plural
+- surface: zai
+  status: unknown_word
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+- surface: mazai
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: zai
+    pos: noun
+    morphemes:
+    - surface: ma
+      type: noun-class-6
+    - surface: zai
+      type: stem
+    features:
+      noun_class: '6'
+      number: plural
+- surface: banga
+  status: unknown_word
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+- surface: mabanga
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: banga
+    pos: noun
+    morphemes:
+    - surface: ma
+      type: noun-class-6
+    - surface: banga
+      type: stem
+    features:
+      noun_class: '6'
+      number: plural
+- surface: zita
+  status: unknown_word
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+- surface: mazita
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: zita
+    pos: noun
+    morphemes:
+    - surface: ma
+      type: noun-class-6
+    - surface: zita
+      type: stem
+    features:
+      noun_class: '6'
+      number: plural
+- surface: doro
+  status: unknown_word
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+- surface: chikoro
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chikoro
+    pos: noun
+    morphemes:
+    - surface: chi
+      type: noun-class-7
+    - surface: koro
+      type: stem
+    features:
+      noun_class: '7'
+      number: singular
+- surface: zvikoro
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chikoro
+    pos: noun
+    morphemes:
+    - surface: zvi
+      type: noun-class-8
+    - surface: koro
+      type: stem
+    features:
+      noun_class: '8'
+      number: plural
+- surface: chigaro
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chigaro
+    pos: noun
+    morphemes:
+    - surface: chi
+      type: noun-class-7
+    - surface: garo
+      type: stem
+    features:
+      noun_class: '7'
+      number: singular
+- surface: zvigaro
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chigaro
+    pos: noun
+    morphemes:
+    - surface: zvi
+      type: noun-class-8
+    - surface: garo
+      type: stem
+    features:
+      noun_class: '8'
+      number: plural
+- surface: chipfeko
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chipfeko
+    pos: noun
+    morphemes:
+    - surface: chi
+      type: noun-class-7
+    - surface: pfeko
+      type: stem
+    features:
+      noun_class: '7'
+      number: singular
+- surface: zvipfeko
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chipfeko
+    pos: noun
+    morphemes:
+    - surface: zvi
+      type: noun-class-8
+    - surface: pfeko
+      type: stem
+    features:
+      noun_class: '8'
+      number: plural
+- surface: chiShona
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chiShona
+    pos: noun
+    morphemes:
+    - surface: chi
+      type: noun-class-7
+    - surface: shona
+      type: stem
+    features:
+      noun_class: '7'
+      number: singular
+- surface: zviShona
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chiShona
+    pos: noun
+    morphemes:
+    - surface: zvi
+      type: noun-class-8
+    - surface: shona
+      type: stem
+    features:
+      noun_class: '8'
+      number: plural
+- surface: chiRungu
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chiRungu
+    pos: noun
+    morphemes:
+    - surface: chi
+      type: noun-class-7
+    - surface: rungu
+      type: stem
+    features:
+      noun_class: '7'
+      number: singular
+- surface: zviRungu
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: chiRungu
+    pos: noun
+    morphemes:
+    - surface: zvi
+      type: noun-class-8
+    - surface: rungu
+      type: stem
+    features:
+      noun_class: '8'
+      number: plural
+- surface: kavana
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: kavana
+    pos: noun
+    morphemes:
+    - surface: ka
+      type: noun-class-12
+    - surface: vana
+      type: stem
+    features:
+      noun_class: '12'
+      number: singular
+- surface: tuvana
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: kavana
+    pos: noun
+    morphemes:
+    - surface: tu
+      type: noun-class-13
+    - surface: vana
+      type: stem
+    features:
+      noun_class: '13'
+      number: plural
+- surface: uhama
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: uhama
+    pos: noun
+    morphemes:
+    - surface: u
+      type: noun-class-14
+    - surface: hama
+      type: stem
+    features:
+      noun_class: '14'
+      number: singular
+- surface: ushe
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: ushe
+    pos: noun
+    morphemes:
+    - surface: u
+      type: noun-class-14
+    - surface: she
+      type: stem
+    features:
+      noun_class: '14'
+      number: singular
+- surface: kuenda
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: enda
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: enda
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndaenda
+  status: analysed
+  provenance: Fortune (1984), Nhariripiri & standard chiShona reference
+  analyses:
+  - lemma: enda
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: enda
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kuuya
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: uya
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: uya
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndauya
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: uya
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: uya
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kubika
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: bika
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: bika
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndabika
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: bika
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: bika
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kutaura
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: taura
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: taura
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndataura
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: taura
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: taura
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kufamba
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: famba
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: famba
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndafamba
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: famba
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: famba
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kuverenga
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: verenga
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: verenga
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndaverenga
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: verenga
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: verenga
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kurara
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: rara
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: rara
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndarara
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: rara
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: rara
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kushanda
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: shanda
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: shanda
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndashanda
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: shanda
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: shanda
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kuita
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: ita
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: ita
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndaita
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: ita
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: ita
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: kunwa
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: nwa
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: nwa
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: ndanwa
+  status: analysed
+  provenance: Standard chiShona course/dictionary references; noun-class scheme per noun_classes.yaml
+  analyses:
+  - lemma: nwa
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: nwa
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: MURUME
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: murume
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: rume
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: VARUME
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: murume
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: rume
+      type: stem
+    features:
+      noun_class: '2'
+      number: plural
+- surface: MUKADZI
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: mukadzi
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: kadzi
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: MUNHU
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: munhu
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: nhu
+      type: stem
+    features:
+      noun_class: '1'
+      number: singular
+- surface: VANHU
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: munhu
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: nhu
+      type: stem
+    features:
+      noun_class: '2'
+      number: plural
+- surface: MUTI
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: muti
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-3
+    - surface: ti
+      type: stem
+    features:
+      noun_class: '3'
+      number: singular
+- surface: MITI
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: muti
+    pos: noun
+    morphemes:
+    - surface: mi
+      type: noun-class-4
+    - surface: ti
+      type: stem
+    features:
+      noun_class: '4'
+      number: plural
+- surface: CHIKORO
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: chikoro
+    pos: noun
+    morphemes:
+    - surface: chi
+      type: noun-class-7
+    - surface: koro
+      type: stem
+    features:
+      noun_class: '7'
+      number: singular
+- surface: ZVIKORO
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: chikoro
+    pos: noun
+    morphemes:
+    - surface: zvi
+      type: noun-class-8
+    - surface: koro
+      type: stem
+    features:
+      noun_class: '8'
+      number: plural
+- surface: NDAENDA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: enda
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: enda
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: KUENDA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: enda
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: enda
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: NDAUYA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: uya
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: uya
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: KUTAURA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: taura
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: taura
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: NDATAURA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: taura
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: taura
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: CHIGARO
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: chigaro
+    pos: noun
+    morphemes:
+    - surface: chi
+      type: noun-class-7
+    - surface: garo
+      type: stem
+    features:
+      noun_class: '7'
+      number: singular
+- surface: ZVIGARO
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: chigaro
+    pos: noun
+    morphemes:
+    - surface: zvi
+      type: noun-class-8
+    - surface: garo
+      type: stem
+    features:
+      noun_class: '8'
+      number: plural
+- surface: KAVANA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: kavana
+    pos: noun
+    morphemes:
+    - surface: ka
+      type: noun-class-12
+    - surface: vana
+      type: stem
+    features:
+      noun_class: '12'
+      number: singular
+- surface: TUVANA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: kavana
+    pos: noun
+    morphemes:
+    - surface: tu
+      type: noun-class-13
+    - surface: vana
+      type: stem
+    features:
+      noun_class: '13'
+      number: plural
+- surface: UHAMA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: uhama
+    pos: noun
+    morphemes:
+    - surface: u
+      type: noun-class-14
+    - surface: hama
+      type: stem
+    features:
+      noun_class: '14'
+      number: singular
+- surface: USHE
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: ushe
+    pos: noun
+    morphemes:
+    - surface: u
+      type: noun-class-14
+    - surface: she
+      type: stem
+    features:
+      noun_class: '14'
+      number: singular
+- surface: KUFAMBA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: famba
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: famba
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: NDAFAMBA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: famba
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: famba
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: KUVERENGA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: verenga
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: verenga
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: NDAVERENGA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: verenga
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: verenga
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: KUNWA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: nwa
+    pos: verb
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: nwa
+      type: stem
+    features:
+      noun_class: '15'
+      number: singular
+      pos: verbal_infinitive
+- surface: NDANWA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: nwa
+    pos: verb
+    morphemes:
+    - surface: nd
+      type: sagr-1sg
+    - surface: a
+      type: tam-perfect
+    - surface: nwa
+      type: stem
+    features:
+      person: '1'
+      number: singular
+      role: subject
+      tense: perfect
+      aspect: anterior
+- surface: MABANGA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: banga
+    pos: noun
+    morphemes:
+    - surface: ma
+      type: noun-class-6
+    - surface: banga
+      type: stem
+    features:
+      noun_class: '6'
+      number: plural
+- surface: MAZITA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: zita
+    pos: noun
+    morphemes:
+    - surface: ma
+      type: noun-class-6
+    - surface: zita
+      type: stem
+    features:
+      noun_class: '6'
+      number: plural
+- surface: BABA
+  status: analysed
+  provenance: Normalization variant of verified analysis (input case-folded by engine)
+  analyses:
+  - lemma: baba
+    pos: noun
+    morphemes:
+    - surface: ''
+      type: noun-class-1a
+    - surface: baba
+      type: stem
+    features:
+      noun_class: 1a
+      number: singular
+- surface: zzz
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: mumba
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: chikororo
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: banana
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: mudzidzisi
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: harahwa
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: gudyanga
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: mupfudze
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: tsiva
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: mushonga
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: mari
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: sadza
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: nyama
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: huku
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: mbudzi
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: nguva
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: musoro
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: shoko
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: moyo
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+- surface: mwana
+  status: unknown_word
+  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)

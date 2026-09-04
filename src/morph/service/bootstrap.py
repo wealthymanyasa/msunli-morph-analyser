@@ -8,10 +8,13 @@ single ``build_service`` helper that every adapter uses.
 
 from __future__ import annotations
 
+import logging
 import os
 from pathlib import Path
 
 from morph.service.analysis import AnalysisService
+
+logger = logging.getLogger("morph.service.bootstrap")
 
 _DEFAULT_LANGUAGES_ENV = "MORPH_LANGUAGES_DIR"
 
@@ -42,4 +45,9 @@ def build_service(languages_dir: str | Path | None = None) -> AnalysisService:
         for child in sorted(base.iterdir()):
             if child.is_dir():
                 service.load_language_directory(child)
+    logger.info(
+        "built service with %d language pack(s) from %s",
+        len(service.languages()),
+        base,
+    )
     return service

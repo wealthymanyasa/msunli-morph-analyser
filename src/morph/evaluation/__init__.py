@@ -30,6 +30,7 @@ from pydantic import BaseModel, Field
 
 from morph.domain.analysis import AnalysisResult, MorphologicalAnalysis
 from morph.service.analysis import AnalysisService
+from morph.version import __version__
 
 try:
     import yaml
@@ -38,7 +39,7 @@ except ImportError as exc:  # pragma: no cover
 
 # Version of the generic evaluation framework / engine contract this module
 # scores against. Bumped only when the scoring semantics change.
-ENGINE_VERSION = "1.0.0"
+ENGINE_VERSION = __version__
 
 
 class GoldMorpheme(BaseModel):
@@ -163,7 +164,10 @@ def evaluate_record(
                 and (gold.lemma is None or predicted.lemma == gold.lemma)
                 and (gold.pos is None or predicted.pos == gold.pos)
                 and (not gold.morphemes or pred_tokens == gold_tokens)
-                and (not gold.features or _features_contain(predicted.features, gold.features))
+                and (
+                    not gold.features
+                    or _features_contain(predicted.features, gold.features)
+                )
             )
     elif record.status == "unknown_word":
         analysis_ok = status_ok and result.analyses == []
@@ -209,7 +213,7 @@ def run_evaluation(
     service: AnalysisService,
     language: str,
     dataset_path: str | Path,
-) -> "EvaluationReport":
+) -> EvaluationReport:
     """Run the full evaluation and produce a report."""
     records = load_dataset(dataset_path)
     aggregate = Metrics()
@@ -223,14 +227,14 @@ def run_evaluation(
                 {
                     "surface": record.surface,
                     "expected_status": record.status,
-                    "actual": _format_result(
-                        service.analyze(record.surface, language)
-                    ),
+                    "actual": _format_result(service.analyze(record.surface, language)),
                     "provenance": record.provenance,
                 }
             )
 
-    return _build_report(service, language, str(dataset_path), records, aggregate, failures)
+    return _build_report(
+        service, language, str(dataset_path), records, aggregate, failures
+    )
 
 
 def _add_metrics(total: Metrics, delta: Metrics) -> None:
@@ -258,7 +262,9 @@ def _format_result(result: AnalysisResult) -> dict[str, Any]:
             {
                 "lemma": a.lemma,
                 "pos": a.pos,
-                "morphemes": [{"surface": m.surface, "type": m.type} for m in a.morphemes],
+                "morphemes": [
+                    {"surface": m.surface, "type": m.type} for m in a.morphemes
+                ],
                 "features": a.features,
             }
             for a in result.analyses
@@ -277,13 +283,10 @@ def _build_report(
     records: list[GoldRecord],
     agg: Metrics,
     failures: list[dict[str, Any]],
-) -> "EvaluationReport":
+) -> EvaluationReport:
     recall = _rate(agg.tp_morphemes, agg.tp_morphemes + agg.fn_morphemes)
     precision = _rate(agg.tp_morphemes, agg.tp_morphemes + agg.fp_morphemes)
-    f1 = (
-        2 * precision * recall / (precision + recall)
-        if (precision + recall) else 0.0
-    )
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
     return EvaluationReport(
         language=language,
         dataset_path=dataset_path,
@@ -377,7 +380,11 @@ class EvaluationReport(BaseModel):
             lines.append("## Failure cases")
             lines.append("")
             for f in self.failures:
-                lines.append(f"- `{f['surface']}`: expected `{f['expected_status']}`, got `{f['actual']['status']}`")
+                lines.append(
+                    f"- `{f['surface']}`: expected "
+                    f"`{f['expected_status']}`, "
+                    f"got `{f['actual']['status']}`"
+                )
         else:
             lines.append("No failures recorded.")
         return "\n".join(lines)

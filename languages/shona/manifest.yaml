@@ -23,7 +23,7 @@
 metadata:
   code: sn
   name: chiShona (Shona)
-  version: "0.1.0"
+  version: "0.2.0"
   engine_compatibility: "1.x"
   license: CC-BY-4.0
   author: "V1 morph-analyser project"
@@ -32,3 +32,8 @@ metadata:
     Grammar of Shona, standard chiShona pedagogical references, and
     widely attested lexical items from Shona language courses.
     This is a starter pack, not a complete grammar.
+
+# Prompt 4 (v0.2.0) added a modest set of well-attested stems to broaden the
+# gold evaluation dataset across noun classes and verb constructions. The
+# evaluation dataset itself lives in evaluation/gold.yaml and is scored by the
+# language-independent src/morph/evaluation framework.

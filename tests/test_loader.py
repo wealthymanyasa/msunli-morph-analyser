@@ -23,7 +23,7 @@ def test_shona_metadata() -> None:
     pack = load_language_pack(SHONA_DIR)
     md = pack.metadata
     assert md.code == "sn"
-    assert md.version == "0.1.0"
+    assert md.version == "0.2.0"
     assert md.engine_compatibility == "1.x"
     assert md.provenance
 

@@ -24,7 +24,7 @@ _SHONA_SPECIFIC_TERMS = [
     "chikoro",
     "kuenda",
     "ndaenda",
-    "noun-class",            # Shona's class-1/2/... representations
+    "noun-class",  # Shona's class-1/2/... representations
     "mipanda",
     "shona",
     "sagr-1sg",

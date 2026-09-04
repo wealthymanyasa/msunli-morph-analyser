@@ -8,13 +8,18 @@ renders the resulting canonical :class:`~morph.domain.analysis.AnalysisResult`.
 
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 
 import typer
 
 from morph.domain.analysis import AnalysisResult, AnalysisStatus
+from morph.logging import configure_logging
 from morph.service.analysis import AnalysisService, UnknownLanguageError
 from morph.service.bootstrap import build_service
+from morph.version import __version__
+
+logger = logging.getLogger("morph.cli")
 
 app = typer.Typer(
     name="morph",
@@ -65,6 +70,12 @@ def _render_analysis(result: AnalysisResult) -> str:
 def _print_error(message: str) -> None:
     typer.echo(f"error: {message}", err=True)
     raise typer.Exit(code=2)
+
+
+@app.command("version")
+def version() -> None:
+    """Show the morph-analyser version."""
+    typer.echo(f"morph-analyser {__version__}")
 
 
 @app.command("languages")
@@ -136,4 +147,6 @@ def analyze(
 
 def main() -> None:
     """Console-script entry point (``morph ...``)."""
+    configure_logging()
+    logger.info("morph CLI starting (version=%s)", __version__)
     app()

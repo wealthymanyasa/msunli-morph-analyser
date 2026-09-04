@@ -51,9 +51,7 @@ def test_cli_analyze_batch_from_file(tmp_path: Path) -> None:
 
 def test_cli_analyze_file_not_found(tmp_path: Path) -> None:
     missing = tmp_path / "nope.txt"
-    result = runner.invoke(
-        app, ["analyze", "--language", "sn", "--file", str(missing)]
-    )
+    result = runner.invoke(app, ["analyze", "--language", "sn", "--file", str(missing)])
     assert result.exit_code == 2
     assert "file not found" in result.stderr
 

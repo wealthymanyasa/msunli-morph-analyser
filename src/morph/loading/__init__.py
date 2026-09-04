@@ -23,7 +23,7 @@ from morph.engine.pack_validator import LanguagePackValidator, PackValidationErr
 # Files we recognise in a language-pack directory. Each maps to the
 # corresponding top-level key in the LanguagePack model.
 _SECTION_FILES: dict[str, str] = {
-    "manifest": "metadata",           # metadata is required
+    "manifest": "metadata",  # metadata is required
     "normalization": "normalization",
     "lexicon": "lexicon",
     "morphemes": "morphemes",
@@ -130,10 +130,6 @@ def _unwrap_section(section: Any, key: str) -> Any:
     for ``lexicon`` rather than a wrapping dict). Otherwise return the mapping
     unchanged.
     """
-    if (
-        isinstance(section, dict)
-        and len(section) == 1
-        and key in section
-    ):
+    if isinstance(section, dict) and len(section) == 1 and key in section:
         return section[key]
     return section

@@ -72,9 +72,7 @@ class FeatureUnifier(ABC):
     """Aggregates grammatical features contributed by each morpheme."""
 
     @abstractmethod
-    def unify(
-        self, morphemes: list[Morpheme], pack: LanguagePack
-    ) -> dict[str, object]:
+    def unify(self, morphemes: list[Morpheme], pack: LanguagePack) -> dict[str, object]:
         """Return the merged feature dict for a set of morphemes."""
 
 

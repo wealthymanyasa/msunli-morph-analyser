@@ -31,17 +31,31 @@ def _ambiguous_service() -> AnalysisService:
     """A pack where 'mutin' has two valid analyses (see test_ambiguity)."""
     data: dict[str, Any] = sample_pack_data()
     data["lexicon"] = [
-        {"surface": "tin", "lemma": "mufv", "pos": "noun",
-         "features": {"noun_class": "1", "number": "singular"}},
-        {"surface": "tin", "lemma": "mvo", "pos": "noun",
-         "features": {"noun_class": "1", "number": "singular"}},
+        {
+            "surface": "tin",
+            "lemma": "mufv",
+            "pos": "noun",
+            "features": {"noun_class": "1", "number": "singular"},
+        },
+        {
+            "surface": "tin",
+            "lemma": "mvo",
+            "pos": "noun",
+            "features": {"noun_class": "1", "number": "singular"},
+        },
     ]
     data["morphemes"] = [
         {"id": "stem", "sources_lexicon": True, "aliases": [], "features": {}},
-        {"id": "class-1", "aliases": ["mu"], "features": {"noun_class": "1",
-         "number": "singular"}},
-        {"id": "class-3", "aliases": ["mu"], "features": {"noun_class": "3",
-         "number": "singular"}},
+        {
+            "id": "class-1",
+            "aliases": ["mu"],
+            "features": {"noun_class": "1", "number": "singular"},
+        },
+        {
+            "id": "class-3",
+            "aliases": ["mu"],
+            "features": {"noun_class": "3", "number": "singular"},
+        },
     ]
     data["morphotactics"] = [
         {"sequence": "class-1 stem", "id": "c1"},
@@ -51,9 +65,7 @@ def _ambiguous_service() -> AnalysisService:
         {"identifier": "1", "plural_of": "2"},
         {"identifier": "3", "plural_of": "4"},
     ]
-    data["constraints"] = [
-        {"id": "agr", "kind": "noun_class_agreement", "params": {}}
-    ]
+    data["constraints"] = [{"id": "agr", "kind": "noun_class_agreement", "params": {}}]
     service = AnalysisService()
     service.register_pack(data)
     return service
@@ -83,7 +95,11 @@ def ambiguous_client() -> TestClient:
 def test_health_ok(shona_client: TestClient) -> None:
     response = shona_client.get("/api/v1/health")
     assert response.status_code == 200
-    assert response.json() == {"status": "ok"}
+    body = response.json()
+    assert body["status"] == "ok"
+    assert isinstance(body["languages"], list)
+    assert {k: body["languages"][0][k] for k in ("code",)} == {"code": "sn"}
+    assert body["languages"][0]["version"]
 
 
 # ── languages ───────────────────────────────────────────────────────────────
@@ -147,9 +163,7 @@ def test_analyze_unknown_language_returns_404(shona_client: TestClient) -> None:
 
 
 def test_analyze_validation_error_422(shona_client: TestClient) -> None:
-    response = shona_client.post(
-        "/api/v1/analyze", json={"language": "sn", "word": ""}
-    )
+    response = shona_client.post("/api/v1/analyze", json={"language": "sn", "word": ""})
     assert response.status_code == 422
 
 
@@ -162,12 +176,18 @@ def test_analyze_accepts_dynamic_language_code(shona_client: TestClient) -> None
     # Endpoint logic must not require a fixed language; only registered packs
     # produce analyses, but the endpoint must accept any string and 404 if absent.
     # Here we assert a registered code plus a present-but-unregistered one 404s.
-    assert shona_client.post(
-        "/api/v1/analyze", json={"language": "sn", "word": "mai"}
-    ).status_code == 200
-    assert shona_client.post(
-        "/api/v1/analyze", json={"language": "not-a-language", "word": "x"}
-    ).status_code == 404
+    assert (
+        shona_client.post(
+            "/api/v1/analyze", json={"language": "sn", "word": "mai"}
+        ).status_code
+        == 200
+    )
+    assert (
+        shona_client.post(
+            "/api/v1/analyze", json={"language": "not-a-language", "word": "x"}
+        ).status_code
+        == 404
+    )
 
 
 def test_analyze_preserves_ambiguity(ambiguous_client: TestClient) -> None:

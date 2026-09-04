@@ -26,9 +26,7 @@ class LanguageMetadata(BaseModel):
         description="Short canonical language code, e.g. 'sn' for a specific language"
     )
     name: str = Field(description="Human-readable language name, e.g. 'Zulu'")
-    version: str = Field(
-        description="Semantic version of this pack, e.g. '1.0.0'"
-    )
+    version: str = Field(description="Semantic version of this pack, e.g. '1.0.0'")
     engine_compatibility: str = Field(
         description="Semantic version range of the engine this pack supports"
     )
@@ -111,9 +109,7 @@ class MorphotacticRule(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    sequence: str = Field(
-        description="Morphotactic pattern over morpheme type ids"
-    )
+    sequence: str = Field(description="Morphotactic pattern over morpheme type ids")
     id: str | None = Field(default=None)
 
 
@@ -207,7 +203,8 @@ class NounClass(BaseModel):
         description="Representative lexical examples",
     )
     dialectal_register: str | None = Field(
-        default=None, description="Dialectal or register notes",
+        default=None,
+        description="Dialectal or register notes",
     )
     provenance: str | None = Field(default=None)
     status: str | None = Field(

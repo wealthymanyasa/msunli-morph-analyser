@@ -132,9 +132,7 @@ class DefaultFeatureUnifier(interfaces.FeatureUnifier):
 
     _PREFIX_HEADED_FEATURES = frozenset({"noun_class", "number"})
 
-    def unify(
-        self, morphemes: list[Morpheme], pack: LanguagePack
-    ) -> dict[str, object]:
+    def unify(self, morphemes: list[Morpheme], pack: LanguagePack) -> dict[str, object]:
         stem_type_ids = {m.id for m in pack.morphemes if m.sources_lexicon}
         merged: dict[str, object] = {}
         for morpheme in morphemes:
@@ -177,9 +175,7 @@ class DefaultConstraintValidator(interfaces.ConstraintValidator):
         if not pack.constraints:
             return analysis_candidates
 
-        stem_type_ids = {
-            m.id for m in pack.morphemes if m.sources_lexicon
-        }
+        stem_type_ids = {m.id for m in pack.morphemes if m.sources_lexicon}
         class_pairings = self._class_pairings(pack)
 
         valid: list[MorphologicalAnalysis] = []
@@ -299,15 +295,11 @@ class DefaultCandidateRanker(interfaces.CandidateRanker):
         scored: list[MorphologicalAnalysis] = []
         for candidate in candidates:
             score = self._score(candidate, pack)
-            scored.append(
-                candidate.model_copy(update={"score": score})
-            )
+            scored.append(candidate.model_copy(update={"score": score}))
         scored.sort(key=lambda c: c.score if c.score is not None else float("inf"))
         return scored
 
-    def _score(
-        self, candidate: MorphologicalAnalysis, pack: LanguagePack
-    ) -> float:
+    def _score(self, candidate: MorphologicalAnalysis, pack: LanguagePack) -> float:
         score = 0.0
         config = pack.ranking
         if config.prefer_lemmas and candidate.lemma is None:

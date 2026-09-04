@@ -104,3 +104,9 @@ celerybeat.pid
 
 # project specific
 *.hypothesis/
+
+# uv
+.uv/
+
+# Docker
+docker-compose.override.yml

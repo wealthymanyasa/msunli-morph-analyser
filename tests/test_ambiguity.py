@@ -23,17 +23,31 @@ def _build_ambiguous_service() -> AnalysisService:
     """
     data = sample_pack_data()  # base sample (has noun agreement machinery)
     data["lexicon"] = [
-        {"surface": "tin", "lemma": "mufv", "pos": "noun",
-         "features": {"noun_class": "1", "number": "singular"}},
-        {"surface": "tin", "lemma": "mvo", "pos": "noun",
-         "features": {"noun_class": "1", "number": "singular"}},
+        {
+            "surface": "tin",
+            "lemma": "mufv",
+            "pos": "noun",
+            "features": {"noun_class": "1", "number": "singular"},
+        },
+        {
+            "surface": "tin",
+            "lemma": "mvo",
+            "pos": "noun",
+            "features": {"noun_class": "1", "number": "singular"},
+        },
     ]
     data["morphemes"] = [
         {"id": "stem", "sources_lexicon": True, "aliases": [], "features": {}},
-        {"id": "class-1", "aliases": ["mu"], "features": {"noun_class": "1",
-         "number": "singular"}},
-        {"id": "class-3", "aliases": ["mu"], "features": {"noun_class": "3",
-         "number": "singular"}},
+        {
+            "id": "class-1",
+            "aliases": ["mu"],
+            "features": {"noun_class": "1", "number": "singular"},
+        },
+        {
+            "id": "class-3",
+            "aliases": ["mu"],
+            "features": {"noun_class": "3", "number": "singular"},
+        },
     ]
     data["morphotactics"] = [
         {"sequence": "class-1 stem", "id": "c1"},
@@ -43,9 +57,7 @@ def _build_ambiguous_service() -> AnalysisService:
         {"identifier": "1", "plural_of": "2"},
         {"identifier": "3", "plural_of": "4"},
     ]
-    data["constraints"] = [
-        {"id": "agr", "kind": "noun_class_agreement", "params": {}}
-    ]
+    data["constraints"] = [{"id": "agr", "kind": "noun_class_agreement", "params": {}}]
     service = AnalysisService()
     service.register_pack(data)
     return service

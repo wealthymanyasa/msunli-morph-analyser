@@ -23,8 +23,10 @@ from morph.service.analysis import (
     UnknownLanguageError,
     create_service,
 )
+from morph.version import __version__
 
 __all__ = [
+    "__version__",
     "AnalysisResult",
     "AnalysisStatus",
     "Morpheme",

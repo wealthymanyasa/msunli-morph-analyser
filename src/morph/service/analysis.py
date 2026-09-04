@@ -9,6 +9,7 @@ delegates to the language-agnostic engine.
 
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -17,6 +18,8 @@ from morph.domain.pack import LanguagePack
 from morph.engine.factory import MorphologyEngine, default_engine
 from morph.engine.interfaces import AnalysisStrategy
 from morph.loading import load_language_pack
+
+logger = logging.getLogger(__name__)
 
 
 class UnknownLanguageError(Exception):
@@ -39,12 +42,23 @@ class AnalysisService:
         """Validate and register a language pack, keyed by its code."""
         pack = self._engine.validator.validate(data)
         self._packs[pack.code] = pack
+        logger.info(
+            "registered language pack code=%s version=%s",
+            pack.code,
+            pack.metadata.version,
+        )
         return pack
 
     def load_language_directory(self, directory: str | Path) -> LanguagePack:
         """Load a language pack from a YAML directory and register it."""
         pack = load_language_pack(directory, engine_major=self._engine_major())
         self._packs[pack.code] = pack
+        logger.info(
+            "loaded language pack code=%s version=%s from %s",
+            pack.code,
+            pack.metadata.version,
+            directory,
+        )
         return pack
 
     def _engine_major(self) -> int:
