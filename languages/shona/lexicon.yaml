@@ -1,0 +1,115 @@
+# Shona lexical inventory — declarative stems.
+#
+# Surfaces are STEMS (the part after the noun-class/verbal prefix has been
+# removed). The engine composes stems with affixes per the morphotactics.
+#
+# Representative, widely attested items. Confidence: draft (V1 starter).
+# Provenance: standard chiShona course/dictionary references and the
+# noun-class resource in noun_classes.yaml.
+
+lexicon:
+  # ── Class 1/2 (human) ───────────────────────────────────────────────────
+  - surface: rume
+    lemma: murume
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+
+  - surface: kadzi
+    lemma: mukadzi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+
+  - surface: komana
+    lemma: mukomana
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+
+  # ── Class 1a (zero-prefix kinship) ──────────────────────────────────────
+  - surface: mai
+    lemma: mai
+    pos: noun
+    features:
+      noun_class: "1a"
+      number: singular
+
+  - surface: baba
+    lemma: baba
+    pos: noun
+    features:
+      noun_class: "1a"
+      number: singular
+
+  # ── Class 3/4 (inanimate) ───────────────────────────────────────────────
+  - surface: ti
+    lemma: muti
+    pos: noun
+    features:
+      noun_class: "3"
+      number: singular
+
+  - surface: pata
+    lemma: mupata
+    pos: noun
+    features:
+      noun_class: "3"
+      number: singular
+
+  # ── Class 5/6 ───────────────────────────────────────────────────────────
+  - surface: zai
+    lemma: zai
+    pos: noun
+    features:
+      noun_class: "5"
+      number: singular
+
+  # ── Class 7/8 (often inanimate/object; also languages) ──────────────────
+  - surface: koro
+    lemma: chikoro
+    pos: noun
+    features:
+      noun_class: "7"
+      number: singular
+
+  - surface: shona
+    lemma: chiShona
+    pos: noun
+    features:
+      noun_class: "7"
+
+  # ── Class 12/13 (diminutive) ────────────────────────────────────────────
+  - surface: vana
+    lemma: kavana
+    pos: noun
+    features:
+      noun_class: "12"
+      number: singular
+
+  # ── Class 14 (abstract) ─────────────────────────────────────────────────
+  - surface: hama
+    lemma: uhama
+    pos: noun
+    features:
+      noun_class: "14"
+      number: singular
+
+  # ── Verbal stems (representative) ───────────────────────────────────────
+  - surface: enda
+    lemma: enda
+    pos: verb
+    features: {}
+
+  - surface: uya
+    lemma: uya
+    pos: verb
+    features: {}
+
+  - surface: bika
+    lemma: bika
+    pos: verb
+    features: {}

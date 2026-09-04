@@ -1,0 +1,15 @@
+# Shona normalization configuration.
+#
+# V1 is deliberately conservative: we do not invent orthographic rules.
+# We only apply:
+#   - lowercase (analysis is case-insensitive for lookups)
+#   - NFC Unicode normalization (decomposed accents are recombined)
+#
+# The generic engine applies lowercase first, then ordered [pattern, replacement]
+# rules. Shona uses the Latin alphabet with some digraphs (sv, zv, dx, etc.)
+# but no character remapping is applied here.
+
+normalization:
+  lowercase: true
+  unicode_form: NFC
+  rules: []

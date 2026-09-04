@@ -1,0 +1,6 @@
+# Shona paradigms — declarative.
+#
+# V1 does not implement declarative paradigms yet. Reserved for future work.
+# The list is empty; the schema is supported by the engine contract.
+
+paradigms: []

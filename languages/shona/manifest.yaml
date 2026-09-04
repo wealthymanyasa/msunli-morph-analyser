@@ -1,0 +1,34 @@
+# Shona language pack — manifest/metadata
+# Language: chiShona (Shona)
+# ISO 639-1: sn
+#
+# This pack provides a small, representative V1 inventory for the
+# deterministic morphology engine. It is NOT a complete grammar.
+#
+# Provenance:
+#   - Noun class system: based on standard descriptions from
+#     Fortune, G. (1984) "An Analytical Grammar of Shona" and
+#     standard chiShona pedagogical references.
+#   - Lexicon: widely attested, clearly segmentable stems from
+#     standard Shona language courses and dictionaries.
+#   - Verbal morphology: representative infinitive and conjugated forms
+#     from standard references.
+#
+# Known limitations:
+#   - No complete morphophonological rules (e.g. nasal assimilation).
+#   - No derivational morphology.
+#   - No tone/accent representation.
+#   - Dialectal variation not modelled beyond notes.
+
+metadata:
+  code: sn
+  name: chiShona (Shona)
+  version: "0.1.0"
+  engine_compatibility: "1.x"
+  license: CC-BY-4.0
+  author: "V1 morph-analyser project"
+  provenance: >
+    Representative V1 inventory based on Fortune (1984) An Analytical
+    Grammar of Shona, standard chiShona pedagogical references, and
+    widely attested lexical items from Shona language courses.
+    This is a starter pack, not a complete grammar.

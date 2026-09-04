@@ -1,0 +1,478 @@
+"""Concrete, language-agnostic implementations of the engine components.
+
+These implementations interpret declarative language packs generically. They
+contain no language-specific rules — all behaviour is driven by the data in a
+language pack.
+"""
+
+from __future__ import annotations
+
+import re
+from collections import defaultdict
+from dataclasses import dataclass
+from typing import Any
+
+from morph.domain.analysis import Morpheme, MorphologicalAnalysis
+from morph.domain.pack import Constraint, LanguagePack, LexicalEntry, MorphemeSpec
+from morph.engine import interfaces
+
+
+class ConfigDrivenNormalizer(interfaces.Normalizer):
+    """Normalizes based purely on a pack's NormalizationConfig.
+
+    Applies (in order): optional lowercasing, then each ordered
+    ``[pattern, replacement]`` rule. Patterns are interpreted as regular
+    expressions; replacements may reference capture groups.
+    """
+
+    def normalize(self, surface: str, pack: LanguagePack) -> tuple[str, bool]:
+        result = surface
+        if pack.normalization.lowercase:
+            result = result.lower()
+        for pattern, replacement in pack.normalization.rules:
+            compiled = re.compile(pattern)
+            result = compiled.sub(replacement, result)
+        return result, result != surface
+
+
+class PackLexicon(interfaces.Lexicon):
+    """Lexicon backed by the pack's declarative lexical entries."""
+
+    def __init__(self) -> None:
+        self._index: dict[str, list[LexicalEntry]] = defaultdict(list)
+
+    def lookup(self, surface: str, pack: LanguagePack) -> list[LexicalEntry]:
+        matches = self._index.get(surface)
+        if matches is not None:
+            return list(matches)
+        entries: list[LexicalEntry] = []
+        for entry in pack.lexicon:
+            if entry.surface == surface:
+                entries.append(entry)
+        self._index[surface] = entries
+        return list(entries)
+
+
+class MorphemeSpecTable:
+    """Helper mapping morpheme type ids to their specs within a pack."""
+
+    def __init__(self, pack: LanguagePack) -> None:
+        self._by_id = {m.id: m for m in pack.morphemes}
+
+    def get(self, morpheme_id: str) -> MorphemeSpec | None:
+        return self._by_id.get(morpheme_id)
+
+
+class DirectCandidateGenerator(interfaces.CandidateGenerator):
+    """Generates candidate segmentations.
+
+    V1 strategy: if the normalized form matches a lexical root exactly, that
+    root candidate (possibly with an attached suffix morpheme) is generated.
+    This is deliberately simple and generic; richer segmentation is a later
+    concern driven by pack morphotactics.
+    """
+
+    def generate(
+        self, surface: str, normalized: str, pack: LanguagePack
+    ) -> list[list[Morpheme]]:
+        lexicon = PackLexicon()
+        roots = lexicon.lookup(normalized, pack)
+        candidates: list[list[Morpheme]] = []
+        for root in roots:
+            morphemes: list[Morpheme] = [
+                Morpheme(
+                    surface=normalized,
+                    type="root",
+                    lemma=root.lemma or root.surface,
+                    pos=root.pos,
+                    features=dict(root.features),
+                )
+            ]
+            candidates.append(morphemes)
+        return candidates
+
+
+class PackSegmenter(interfaces.Segmenter):
+    """Builds rich Morpheme objects from morpheme type code lists."""
+
+    def __init__(self) -> None:
+        self._tables: dict[str, MorphemeSpecTable] = {}
+
+    def segment(
+        self, morpheme_codes: list[str], surface: str, pack: LanguagePack
+    ) -> list[Morpheme]:
+        table = MorphemeSpecTable(pack)
+        result: list[Morpheme] = []
+        for code in morpheme_codes:
+            spec = table.get(code)
+            if spec is None:
+                raise ValueError(f"undefined morpheme id in segmentation: {code!r}")
+            result.append(
+                Morpheme(
+                    surface="",  # surface filled by the generator
+                    type=spec.id,
+                    gloss=spec.id,
+                    features=dict(spec.features),
+                )
+            )
+        return result
+
+
+class DefaultFeatureUnifier(interfaces.FeatureUnifier):
+    """Merges each morpheme's feature dict into a single surface analysis.
+
+    Ordinarily, features are merged in morpheme order (later wins). However,
+    for grammatical features that are *headed by the affix* on the surface —
+    ``noun_class`` and ``number`` — an affix marker expresses the surface
+    value directly (e.g. the plural class marked by a plural prefix), so it
+    takes precedence over the stem's lemma-level value. Stems identified via
+    the pack's ``sources_lexicon`` morphemes therefore yield to affixes for
+    these keys; everything else follows the usual later-wins merge.
+    """
+
+    _PREFIX_HEADED_FEATURES = frozenset({"noun_class", "number"})
+
+    def unify(
+        self, morphemes: list[Morpheme], pack: LanguagePack
+    ) -> dict[str, object]:
+        stem_type_ids = {m.id for m in pack.morphemes if m.sources_lexicon}
+        merged: dict[str, object] = {}
+        for morpheme in morphemes:
+            is_stem = morpheme.type in stem_type_ids
+            for key, value in morpheme.features.items():
+                if is_stem and key in self._PREFIX_HEADED_FEATURES and key in merged:
+                    continue
+                merged[key] = value
+        return merged
+
+
+class DefaultConstraintValidator(interfaces.ConstraintValidator):
+    """Applies the simplest constraint kinds generically.
+
+    Supported ``kind`` values (interpreted from pack data, not hard-coded to a
+    language):
+      - ``no_missing_required_features``: rejects candidates lacking every
+        feature named in ``params.required``.
+      - ``noun_class_agreement``: for nominal analyses, requires the noun class
+        of every affix (prefix) to agree with the stem's class, where agreement
+        means equal, or the stem's class is the declared ``singular_of`` or
+        ``plural_of`` of the affix class. The pairings are read from the pack's
+        ``noun_classes`` resource (declarative), so the engine knows nothing
+        specific to any particular language.
+      - ``affix_stem_pos``: restricts which noun class affixes may attach to a
+        stem of a given POS. ``params.stem_pos`` names the POS and
+        ``params.affix_classes`` lists the permitted class ids for noun class
+        prefixes on such stems. This lets a pack express e.g. that verbal stems
+        only take the infinitive class and not a homophonous locative class,
+        keeping the rule declarative and language-agnostic.
+
+    Unknown constraint kinds are ignored (their enforcement is out of scope).
+    """
+
+    def validate(
+        self,
+        analysis_candidates: list[MorphologicalAnalysis],
+        pack: LanguagePack,
+    ) -> list[MorphologicalAnalysis]:
+        if not pack.constraints:
+            return analysis_candidates
+
+        stem_type_ids = {
+            m.id for m in pack.morphemes if m.sources_lexicon
+        }
+        class_pairings = self._class_pairings(pack)
+
+        valid: list[MorphologicalAnalysis] = []
+        for candidate in analysis_candidates:
+            accepted = True
+            for constraint in pack.constraints:
+                if not self._satisfied(
+                    candidate, constraint, stem_type_ids, class_pairings
+                ):
+                    accepted = False
+                    break
+            if accepted:
+                valid.append(candidate)
+        return valid
+
+    @staticmethod
+    def _class_pairings(pack: LanguagePack) -> dict[str, list[str]]:
+        """Map each class id to the set of classes it agrees with.
+
+        A class agrees with itself, plus its declared singular and plural
+        partners.
+        """
+        pairings: dict[str, list[str]] = {}
+        for nc in pack.noun_classes:
+            partners = {nc.identifier}
+            if nc.singular_of:
+                partners.add(nc.singular_of)
+            if nc.plural_of:
+                partners.add(nc.plural_of)
+            pairings[nc.identifier] = sorted(partners)
+        return pairings
+
+    @staticmethod
+    def _satisfied(
+        candidate: MorphologicalAnalysis,
+        constraint: Constraint,
+        stem_type_ids: set[str],
+        class_pairings: dict[str, list[str]],
+    ) -> bool:
+        if constraint.kind == "no_missing_required_features":
+            required = set(constraint.params.get("required", []) or [])
+            present = set(candidate.features)
+            missing = required - present
+            return not missing
+        if constraint.kind == "noun_class_agreement":
+            return DefaultConstraintValidator._noun_class_agreement(
+                candidate, stem_type_ids, class_pairings
+            )
+        if constraint.kind == "affix_stem_pos":
+            return DefaultConstraintValidator._affix_stem_pos(
+                candidate, stem_type_ids, constraint.params
+            )
+        # Unknown constraint kinds: no-op (out of scope for V1).
+        return True
+
+    @staticmethod
+    def _noun_class_agreement(
+        candidate: MorphologicalAnalysis,
+        stem_type_ids: set[str],
+        class_pairings: dict[str, list[str]],
+    ) -> bool:
+        stem_class: str | None = None
+        affix_classes: list[str] = []
+        for m in candidate.morphemes:
+            if "noun_class" not in m.features:
+                continue
+            if m.type in stem_type_ids:
+                stem_class = str(m.features["noun_class"])
+            else:
+                affix_classes.append(str(m.features["noun_class"]))
+
+        if stem_class is None or not affix_classes:
+            return True
+
+        allowed = set(class_pairings.get(stem_class, [stem_class]))
+        return all(ac in allowed for ac in affix_classes)
+
+    @staticmethod
+    def _affix_stem_pos(
+        candidate: MorphologicalAnalysis,
+        stem_type_ids: set[str],
+        params: dict[str, Any],
+    ) -> bool:
+        stem_pos = params.get("stem_pos")
+        allowed = set(params.get("affix_classes", []) or [])
+        if not stem_pos or not allowed:
+            return True
+
+        for m in candidate.morphemes:
+            if m.type not in stem_type_ids:
+                continue
+            if m.pos != stem_pos:
+                return True  # restriction applies only to this stem POS
+            for affix in candidate.morphemes:
+                if affix.type in stem_type_ids:
+                    continue
+                if (
+                    "noun_class" in affix.features
+                    and str(affix.features["noun_class"]) not in allowed
+                ):
+                    return False
+        return True
+
+
+class DefaultCandidateRanker(interfaces.CandidateRanker):
+    """Deterministic ranking.
+
+    Scores each candidate using pack.ranking.penalties. Lower score is better.
+    Candidates with a resolved lemma are preferred when
+    ``ranking.prefer_lemmas`` is set. Ties are broken by (stable) insertion
+    order, keeping output deterministic.
+    """
+
+    def rank(
+        self, candidates: list[MorphologicalAnalysis], pack: LanguagePack
+    ) -> list[MorphologicalAnalysis]:
+        scored: list[MorphologicalAnalysis] = []
+        for candidate in candidates:
+            score = self._score(candidate, pack)
+            scored.append(
+                candidate.model_copy(update={"score": score})
+            )
+        scored.sort(key=lambda c: c.score if c.score is not None else float("inf"))
+        return scored
+
+    def _score(
+        self, candidate: MorphologicalAnalysis, pack: LanguagePack
+    ) -> float:
+        score = 0.0
+        config = pack.ranking
+        if config.prefer_lemmas and candidate.lemma is None:
+            score += config.penalties.get("no_lemma", 1.0)
+        longer = len(candidate.morphemes) - 1
+        if longer > 0:
+            score += config.penalties.get("longer_segmentation", 0.0) * longer
+        return score
+
+
+# ── Morphotactics-driven candidate generation ──────────────────────────────────
+
+
+@dataclass(frozen=True)
+class _TokenSpec:
+    """A single token in a parsed morphotactic rule sequence."""
+
+    morpheme_id: str
+    optional: bool
+
+
+def _parse_morphotactic_tokens(sequence: str) -> list[_TokenSpec]:
+    """Parse a morphotactic sequence string into ordered token specs.
+
+    Grammar (space-separated tokens):
+        ``foo``   — required single occurrence of morpheme ``foo``
+        ``foo?``  — optional single occurrence of morpheme ``foo``
+    """
+    tokens: list[_TokenSpec] = []
+    for raw in sequence.split():
+        optional = raw.endswith("?")
+        morpheme_id = raw.rstrip("?") if optional else raw
+        if morpheme_id:
+            tokens.append(_TokenSpec(morpheme_id=morpheme_id, optional=optional))
+    return tokens
+
+
+def _build_morpheme_index(pack: LanguagePack) -> dict[str, MorphemeSpec]:
+    return {m.id: m for m in pack.morphemes}
+
+
+class ConcatenativeCandidateGenerator(interfaces.CandidateGenerator):
+    """Generates candidate segmentations driven by declarative morphotactics.
+
+    For each morphotactic rule in the language pack, this generator attempts
+    to segment the normalized surface form by matching tokens left-to-right:
+
+    - **lexical tokens** (``sources_lexicon=True``): the span must match the
+      surface of a lexicon entry; this segment becomes the stem/root.
+    - **affix tokens** (``sources_lexicon=False``): the span must match one of
+      the morpheme's declared ``aliases`` (surface realizations).
+    - **optional tokens** may be skipped.
+
+    All valid segmentations that cover the entire surface form are yielded;
+    ambiguity is never silently discarded.
+    """
+
+    def generate(
+        self, surface: str, normalized: str, pack: LanguagePack
+    ) -> list[list[Morpheme]]:
+        morpheme_index = _build_morpheme_index(pack)
+        lexicon_stems = self._build_lexicon_stem_index(pack)
+
+        all_candidates: list[list[Morpheme]] = []
+        for rule in pack.morphotactics:
+            token_specs = _parse_morphotactic_tokens(rule.sequence)
+            if not token_specs:
+                continue
+            self._generate_for_rule(
+                token_specs,
+                normalized,
+                morpheme_index,
+                lexicon_stems,
+                0,
+                0,
+                [],
+                all_candidates,
+            )
+        return all_candidates
+
+    @staticmethod
+    def _build_lexicon_stem_index(
+        pack: LanguagePack,
+    ) -> dict[str, list[LexicalEntry]]:
+        stems: dict[str, list[LexicalEntry]] = defaultdict(list)
+        for entry in pack.lexicon:
+            stems[entry.surface].append(entry)
+        return dict(stems)
+
+    def _generate_for_rule(
+        self,
+        token_specs: list[_TokenSpec],
+        surface: str,
+        morpheme_index: dict[str, MorphemeSpec],
+        lexicon_stems: dict[str, list[LexicalEntry]],
+        token_idx: int,
+        offset: int,
+        current: list[Morpheme],
+        out: list[list[Morpheme]],
+    ) -> None:
+        if token_idx == len(token_specs):
+            if offset == len(surface):
+                out.append(list(current))
+            return
+
+        spec_token = token_specs[token_idx]
+        morpheme_spec = morpheme_index.get(spec_token.morpheme_id)
+        if morpheme_spec is None:
+            return
+
+        if morpheme_spec.sources_lexicon:
+            # Try all lexicon stems that start at current offset
+            remaining = surface[offset:]
+            for stem_surface, entries in sorted(lexicon_stems.items()):
+                if remaining.startswith(stem_surface):
+                    for entry in entries:
+                        morpheme = Morpheme(
+                            surface=stem_surface,
+                            type=spec_token.morpheme_id,
+                            lemma=entry.lemma,
+                            pos=entry.pos,
+                            gloss=spec_token.morpheme_id,
+                            features=dict(entry.features),
+                        )
+                        self._generate_for_rule(
+                            token_specs,
+                            surface,
+                            morpheme_index,
+                            lexicon_stems,
+                            token_idx + 1,
+                            offset + len(stem_surface),
+                            current + [morpheme],
+                            out,
+                        )
+        else:
+            # Try all aliases at current offset
+            remaining = surface[offset:]
+            for alias in sorted(morpheme_spec.aliases):
+                if remaining.startswith(alias):
+                    morpheme = Morpheme(
+                        surface=alias,
+                        type=spec_token.morpheme_id,
+                        gloss=spec_token.morpheme_id,
+                        features=dict(morpheme_spec.features),
+                    )
+                    self._generate_for_rule(
+                        token_specs,
+                        surface,
+                        morpheme_index,
+                        lexicon_stems,
+                        token_idx + 1,
+                        offset + len(alias),
+                        current + [morpheme],
+                        out,
+                    )
+
+            # If optional, also try skipping this token
+            if spec_token.optional:
+                self._generate_for_rule(
+                    token_specs,
+                    surface,
+                    morpheme_index,
+                    lexicon_stems,
+                    token_idx + 1,
+                    offset,
+                    current,
+                    out,
+                )

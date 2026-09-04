@@ -1,0 +1,63 @@
+# Shona morphotactics — declarative valid morpheme sequences.
+#
+# Each rule is a space-separated sequence of morpheme ids. A trailing `?`
+# marks an optional token. The engine interprets these generically: tokens
+# whose morpheme is `sources_lexicon: true` are matched against the lexicon;
+# other tokens match one of their declared surface aliases.
+#
+# Represented structures include:
+#   - noun-class prefix  →  nominal stem
+#   - infinitive ku-     →  verbal infinitive
+#   - subject-agreement  →  tense/aspect →  verb stem
+
+morphotactics:
+  # Noun: single noun-class prefix + stem.
+  - id: noun-class-1-stem
+    sequence: "noun-class-1 stem"
+  - id: noun-class-1a-stem
+    sequence: "noun-class-1a stem"
+  - id: noun-class-2-stem
+    sequence: "noun-class-2 stem"
+  - id: noun-class-2a-stem
+    sequence: "noun-class-2a stem"
+  - id: noun-class-3-stem
+    sequence: "noun-class-3 stem"
+  - id: noun-class-4-stem
+    sequence: "noun-class-4 stem"
+  - id: noun-class-5-stem
+    sequence: "noun-class-5 stem"
+  - id: noun-class-6-stem
+    sequence: "noun-class-6 stem"
+  - id: noun-class-7-stem
+    sequence: "noun-class-7 stem"
+  - id: noun-class-8-stem
+    sequence: "noun-class-8 stem"
+  - id: noun-class-9-stem
+    sequence: "noun-class-9 stem"
+  - id: noun-class-10-stem
+    sequence: "noun-class-10 stem"
+  - id: noun-class-11-stem
+    sequence: "noun-class-11 stem"
+  - id: noun-class-12-stem
+    sequence: "noun-class-12 stem"
+  - id: noun-class-13-stem
+    sequence: "noun-class-13 stem"
+  - id: noun-class-14-stem
+    sequence: "noun-class-14 stem"
+  - id: noun-class-15-stem
+    sequence: "noun-class-15 stem"
+  - id: noun-class-16-stem
+    sequence: "noun-class-16 stem"
+  - id: noun-class-17-stem
+    sequence: "noun-class-17 stem"
+  - id: noun-class-18-stem
+    sequence: "noun-class-18 stem"
+
+  # Verbal infinitive: class 15 ku- + verb stem.
+  # (Class 15 IS the infinitive class in Shona; the class-15 rule above applies
+  # to verb stems too — no separate rule, which would duplicate the sequence.)
+
+  # Conjugated verb: 1sg subject agreement + optional perfect + verb stem.
+  # e.g. nd-a-enda -> "I have gone".
+  - id: sagr-tam-stem
+    sequence: "sagr-1sg tam-perfect? stem"

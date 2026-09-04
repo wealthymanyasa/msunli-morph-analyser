@@ -1,0 +1,197 @@
+# Shona morpheme inventory — declarative.
+#
+# Each morpheme declares its surface realizations (aliases). IMPORTANT:
+# a surface string may appear as an alias of more than one morpheme. That is
+# an intentional, data-level statement that the shared surface form is NOT a
+# unique one-to-one class identifier — it is either (a) an allomorph of the
+# same underlying morpheme across contexts, or (b) a homophonous prefix under
+# a different class. The engine interprets these declarations generically and
+# does not hard-code this distinction.
+#
+# `sources_lexicon: true` marks morphemes realized by lexicon stem surfaces
+# (the stem/anchor of a morphotactic path).
+
+morphemes:
+  # ── Anchoring stems ─────────────────────────────────────────────────────
+  - id: stem
+    sources_lexicon: true
+    aliases: []
+
+  # ── Noun class prefixes (mipanda) ───────────────────────────────────────
+  # Class 1 (sg, humans). Allomorphs of class 1: mu-/mw-/m-.
+  - id: noun-class-1
+    aliases: ["mu", "mw", "m"]
+    sources_lexicon: false
+    features:
+      noun_class: "1"
+      number: singular
+
+  # Class 1a (zero prefix: names, kinship).
+  - id: noun-class-1a
+    aliases: [""]
+    sources_lexicon: false
+    features:
+      noun_class: "1a"
+      number: singular
+
+  # Class 2 (pl of class 1).
+  - id: noun-class-2
+    aliases: ["va", "v"]
+    sources_lexicon: false
+    features:
+      noun_class: "2"
+      number: plural
+
+  # Class 2a (pl of class 1a; attaches to lexical (names/kinship) stems).
+  - id: noun-class-2a
+    aliases: ["va"]
+    sources_lexicon: false
+    features:
+      noun_class: "2a"
+      number: plural
+
+  # Class 3 (sg, inanimate). Allomorphs of class 3: mu-/mw-/m- (SHARED with
+  # class 1 — the same surface form realises two distinct underlying classes).
+  - id: noun-class-3
+    aliases: ["mu", "mw", "m"]
+    sources_lexicon: false
+    features:
+      noun_class: "3"
+      number: singular
+
+  # Class 4 (pl of class 3).
+  - id: noun-class-4
+    aliases: ["mi", "m"]
+    sources_lexicon: false
+    features:
+      noun_class: "4"
+      number: plural
+
+  # Class 5 (sg).
+  - id: noun-class-5
+    aliases: ["ri", "r"]
+    sources_lexicon: false
+    features:
+      noun_class: "5"
+      number: singular
+
+  # Class 6 (pl of class 5).
+  - id: noun-class-6
+    aliases: ["ma"]
+    sources_lexicon: false
+    features:
+      noun_class: "6"
+      number: plural
+
+  # Class 7 (sg).
+  - id: noun-class-7
+    aliases: ["chi", "ch"]
+    sources_lexicon: false
+    features:
+      noun_class: "7"
+      number: singular
+
+  # Class 8 (pl of class 7).
+  - id: noun-class-8
+    aliases: ["zvi", "zv"]
+    sources_lexicon: false
+    features:
+      noun_class: "8"
+      number: plural
+
+  # Class 9 (sg, often zero/nasal prefix). Modeled as zero-prefix for the
+  # representative set, though the class also has a surface prefix in general.
+  - id: noun-class-9
+    aliases: [""]
+    sources_lexicon: false
+    features:
+      noun_class: "9"
+      number: singular
+
+  # Class 10 (pl of class 9).
+  - id: noun-class-10
+    aliases: ["dz", "d"]
+    sources_lexicon: false
+    features:
+      noun_class: "10"
+      number: plural
+
+  # Class 11 (sg).
+  - id: noun-class-11
+    aliases: ["ru"]
+    sources_lexicon: false
+    features:
+      noun_class: "11"
+      number: singular
+
+  # Class 12 (sg, diminutive).
+  - id: noun-class-12
+    aliases: ["ka"]
+    sources_lexicon: false
+    features:
+      noun_class: "12"
+      number: singular
+
+  # Class 13 (pl of class 12).
+  - id: noun-class-13
+    aliases: ["tu"]
+    sources_lexicon: false
+    features:
+      noun_class: "13"
+      number: plural
+
+  # Class 14 (sg, abstract).
+  - id: noun-class-14
+    aliases: ["u", "w"]
+    sources_lexicon: false
+    features:
+      noun_class: "14"
+      number: singular
+
+  # Class 15 (infinitive/gerund prefix; also used for verbal infinitives).
+  - id: noun-class-15
+    aliases: ["ku", "kw"]
+    sources_lexicon: false
+    features:
+      noun_class: "15"
+      number: singular
+      pos: verbal_infinitive
+
+  # Class 16 (locative near speaker).
+  - id: noun-class-16
+    aliases: ["pa"]
+    sources_lexicon: false
+    features:
+      noun_class: "16"
+
+  # Class 17 (locative).
+  - id: noun-class-17
+    aliases: ["ku"]
+    sources_lexicon: false
+    features:
+      noun_class: "17"
+
+  # Class 18 (locative inside).
+  - id: noun-class-18
+    aliases: ["mu"]
+    sources_lexicon: false
+    features:
+      noun_class: "18"
+
+  # ── Verbal morphology (representative) ──────────────────────────────────
+  # Subject agreement (SA) — 1st person singular.
+  - id: sagr-1sg
+    aliases: ["nd"]
+    sources_lexicon: false
+    features:
+      person: "1"
+      number: singular
+      role: subject
+
+  # Tense/aspect marker — perfect/anterior.
+  - id: tam-perfect
+    aliases: ["a"]
+    sources_lexicon: false
+    features:
+      tense: perfect
+      aspect: anterior

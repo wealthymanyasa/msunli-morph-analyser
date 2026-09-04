@@ -1,0 +1,21 @@
+# Provenance of the individual Shona language-pack resources.
+#
+# Recorded so the pack can be traced to its sources and so disagreements are
+# documented rather than silently resolved.
+
+resources:
+  - resource: lexicon
+    source: "Standard chiShona course/dictionary references; widely attested, clearly segmentable stems."
+    notes: "V1 starter set; confidence draft."
+  - resource: morphemes
+    source: "Fortune (1984) An Analytical Grammar of Shona; standard pedagogical references."
+    notes: "Shared/allomorphic surface forms represented explicitly as data."
+  - resource: noun_classes
+    source: "Fortune (1984) An Analytical Grammar of Shona; standard chiShona references."
+    notes: "Classes 2b, 19, 21 marked 'disputed' — sources vary in classification."
+  - resource: normalization
+    source: "No invented orthographic transformations; lowercase + NFC only."
+    notes: "Deliberately conservative for V1."
+  - resource: morphotactics
+    source: "Derived from the noun-class and verb-stem inventory listed above."
+    notes: "Representative, not exhaustive."

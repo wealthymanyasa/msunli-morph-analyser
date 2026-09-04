@@ -1,0 +1,290 @@
+# Shona noun classes (mipanda) — structured linguistic data.
+#
+# Noun classes are NOT reduced to a flat prefix->class dictionary. Each class
+# records its underlying prefix morpheme, surface allomorphs, whether it has a
+# zero prefix, singular/plural pairing, semantic tendencies, agreement
+# concords, representative examples, provenance and confidence.
+#
+# IMPORTANT about shared/allomorphic surface forms:
+#   - mu-/mw-/m  are allomorphs shared by class 1 and class 3. They are NOT
+#     separate classes — the same surface maps to distinct underlying classes.
+#   - ku- is shared by class 15, class 17 (locative) and the verbal infinitive.
+#   - Class 9 and class 1a are modelled with a zero/null prefix in the
+#     representative set.
+# These distinctions are represented here and in morphemes.yaml; the generic
+# engine interprets them as data.
+#
+# Provenance: Fortune (1984) An Analytical Grammar of Shona; standard
+# chiShona course references. Confidence: 'draft' where forms/classes are
+# pedagogically standard but simplified for V1. Class numbering follows the
+# broadly used Bantu noun-class numbering system.
+
+noun_classes:
+  - identifier: "1"
+    label: "mu-/va-"
+    prefixes: ["mu-"]
+    surface_allomorphs: ["mu", "mw", "m"]
+    has_zero_prefix: false
+    plural_of: "2"
+    semantic_tendencies: ["human beings"]
+    agreement: ["a-", "u-", "wa-", "o-"]
+    examples: ["murume (man)", "mukadzi (woman)", "mukomana (boy)"]
+    provenance: "Fortune (1984); standard pedagogical references"
+    status: attested
+
+  - identifier: "1a"
+    label: "∅- (zero)"
+    prefixes: ["∅"]
+    surface_allomorphs: [""]
+    has_zero_prefix: true
+    plural_of: "2a"
+    semantic_tendencies: ["names", "kinship terms"]
+    agreement: ["a-"]
+    examples: ["Tatenda (name)", "mai (mother)", "baba (father)"]
+    provenance: "Fortune (1984); standard pedagogical references"
+    status: attested
+
+  - identifier: "2"
+    label: "va-"
+    prefixes: ["va-"]
+    surface_allomorphs: ["va", "v"]
+    has_zero_prefix: false
+    singular_of: "1"
+    semantic_tendencies: ["plural of class 1 (humans)"]
+    agreement: ["va-"]
+    examples: ["varume (men)", "vakadzi (women)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "2a"
+    label: "va-"
+    prefixes: ["va-"]
+    surface_allomorphs: ["va"]
+    has_zero_prefix: false
+    singular_of: "1a"
+    semantic_tendencies: ["plural of class 1a (names/kinship)"]
+    agreement: ["va-"]
+    examples: ["vaTatenda", "vanababa (fathers)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "2b"
+    label: "(variants under va-)"
+    prefixes: []
+    surface_allomorphs: ["vana-"]
+    has_zero_prefix: false
+    semantic_tendencies: ["emphatic/communal people, e.g. vanhu"]
+    agreement: ["va-"]
+    examples: ["vanhu (people)"]
+    provenance: "Fortune (1984); note disagreements on classification"
+    status: disputed
+
+  - identifier: "3"
+    label: "mu-/mi-"
+    prefixes: ["mu-"]
+    surface_allomorphs: ["mu", "mw", "m"]
+    has_zero_prefix: false
+    plural_of: "4"
+    semantic_tendencies: ["trees, plants, inanimate objects", "body parts"]
+    agreement: ["u-", "wa-", "wo-"]
+    examples: ["muti (tree)", "mupata (valley)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "4"
+    label: "mi-"
+    prefixes: ["mi-"]
+    surface_allomorphs: ["mi", "m"]
+    has_zero_prefix: false
+    singular_of: "3"
+    semantic_tendencies: ["plural of class 3"]
+    agreement: ["i-", "ya-"]
+    examples: ["miti (trees)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "5"
+    label: "ri-/ma-"
+    prefixes: ["ri-"]
+    surface_allomorphs: ["ri", "r"]
+    has_zero_prefix: false
+    plural_of: "6"
+    semantic_tendencies: ["miscellaneous singular items", "natural phenomena"]
+    agreement: ["ri-", "iro-"]
+    examples: ["zai (egg)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "6"
+    label: "ma-"
+    prefixes: ["ma-"]
+    surface_allomorphs: ["ma"]
+    has_zero_prefix: false
+    singular_of: "5"
+    semantic_tendencies: ["plural of class 5", "mass/abstract plurals"]
+    agreement: ["a-"]
+    examples: ["mazai (eggs)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "7"
+    label: "chi-/zvi-"
+    prefixes: ["chi-"]
+    surface_allomorphs: ["chi", "ch"]
+    has_zero_prefix: false
+    plural_of: "8"
+    semantic_tendencies: ["objects, languages, manner/abstraction"]
+    agreement: ["chi-", "cha-"]
+    examples: ["chikoro (school)", "chiShona (the Shona language)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "8"
+    label: "zvi-"
+    prefixes: ["zvi-"]
+    surface_allomorphs: ["zvi", "zv"]
+    has_zero_prefix: false
+    singular_of: "7"
+    semantic_tendencies: ["plural of class 7"]
+    agreement: ["zvi-"]
+    examples: ["zvikoro (schools)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "9"
+    label: "∅-/nasal-"
+    prefixes: ["∅", "n-", "m-", "ny-"]
+    surface_allomorphs: [""]
+    has_zero_prefix: true
+    plural_of: "10"
+    semantic_tendencies: ["animals", "inanimate objects"]
+    agreement: ["i-", "yi-"]
+    examples: []
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "10"
+    label: "dz- (pl of 9)"
+    prefixes: ["dz-"]
+    surface_allomorphs: ["dz", "d"]
+    has_zero_prefix: false
+    singular_of: "9"
+    semantic_tendencies: ["plural of class 9"]
+    agreement: ["dzi-"]
+    examples: []
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "11"
+    label: "ru-"
+    prefixes: ["ru-"]
+    surface_allomorphs: ["ru"]
+    has_zero_prefix: false
+    # Class 11 commonly pairs with class 10 for plural.
+    plural_of: "10"
+    semantic_tendencies: ["long/thin objects", "abstract nouns"]
+    agreement: ["ru-"]
+    examples: []
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "12"
+    label: "ka-/tu-"
+    prefixes: ["ka-"]
+    surface_allomorphs: ["ka"]
+    has_zero_prefix: false
+    plural_of: "13"
+    semantic_tendencies: ["diminutive singular"]
+    agreement: ["ka-"]
+    examples: ["kavana (little child)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "13"
+    label: "tu-"
+    prefixes: ["tu-"]
+    surface_allomorphs: ["tu"]
+    has_zero_prefix: false
+    singular_of: "12"
+    semantic_tendencies: ["plural of class 12 (diminutive)"]
+    agreement: ["tu-"]
+    examples: []
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "14"
+    label: "u-"
+    prefixes: ["u-"]
+    surface_allomorphs: ["u", "w"]
+    has_zero_prefix: false
+    semantic_tendencies: ["abstract nouns", "quality nouns"]
+    agreement: ["u-", "hwa-"]
+    examples: ["uhama (kinship)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "15"
+    label: "ku-"
+    prefixes: ["ku-"]
+    surface_allomorphs: ["ku", "kw"]
+    has_zero_prefix: false
+    semantic_tendencies: ["infinitive/gerund"]
+    agreement: ["ku-"]
+    examples: ["kuenda (to go)"]
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "16"
+    label: "pa- (locative)"
+    prefixes: ["pa-"]
+    surface_allomorphs: ["pa"]
+    has_zero_prefix: false
+    semantic_tendencies: ["locative: at/near specific place"]
+    agreement: ["pa-"]
+    examples: []
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "17"
+    label: "ku- (locative)"
+    prefixes: ["ku-"]
+    surface_allomorphs: ["ku"]
+    has_zero_prefix: false
+    semantic_tendencies: ["locative: at/general location", "direction"]
+    agreement: ["ku-"]
+    examples: []
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "18"
+    label: "mu- (locative)"
+    prefixes: ["mu-"]
+    surface_allomorphs: ["mu"]
+    has_zero_prefix: false
+    semantic_tendencies: ["locative: inside/within"]
+    agreement: ["mu-"]
+    examples: []
+    provenance: "Fortune (1984)"
+    status: attested
+
+  - identifier: "19"
+    label: "svi- (diminutive, dialectal)"
+    prefixes: ["svi-"]
+    surface_allomorphs: ["svi"]
+    has_zero_prefix: false
+    semantic_tendencies: ["diminutive (in some dialects)"]
+    agreement: []
+    examples: []
+    provenance: "Dialectal; classification varies"
+    status: disputed
+
+  - identifier: "21"
+    label: "zi- (augmentative)"
+    prefixes: ["zi-"]
+    surface_allomorphs: ["zi"]
+    has_zero_prefix: false
+    semantic_tendencies: ["augmentative"]
+    agreement: []
+    examples: []
+    provenance: "Fortune (1984); status varies"
+    status: disputed

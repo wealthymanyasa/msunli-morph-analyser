@@ -1,0 +1,95 @@
+# Shona language-specific analysis expectations.
+#
+# This file is DATA, interpreted by a generic (language-agnostic) test harness.
+# Adding another language means adding a pack + a similar expectations file —
+# never modifying the generic engine or its tests.
+#
+# Each expectation:
+#   surface:    the surface form analysed (as typed)
+#   status:     expected analysis status (one of the AnalysisStatus values)
+#   # optional assertions when status is analysed/ambiguous:
+#   analyses:
+#     - pos:        expected POS (or absent)
+#       lemma:      expected lemma (or absent)
+#       morphemes:  [ {surface, type}, ... ] ordered
+#       features:   { feature: value } subset check
+
+- surface: murume
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: murume
+      morphemes: [{surface: "mu", type: noun-class-1}, {surface: rume, type: stem}]
+
+- surface: varume
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: murume
+      morphemes: [{surface: va, type: noun-class-2}, {surface: rume, type: stem}]
+
+- surface: mukadzi
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: mukadzi
+      morphemes: [{surface: mu, type: noun-class-1}, {surface: kadzi, type: stem}]
+
+- surface: vakadzi
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: mukadzi
+
+- surface: muti
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: muti
+      morphemes: [{surface: mu, type: noun-class-3}, {surface: ti, type: stem}]
+
+- surface: miti
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: muti
+      morphemes: [{surface: mi, type: noun-class-4}, {surface: ti, type: stem}]
+
+- surface: chikoro
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: chikoro
+      morphemes: [{surface: chi, type: noun-class-7}, {surface: koro, type: stem}]
+
+- surface: zvikoro
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: chikoro
+      morphemes: [{surface: zvi, type: noun-class-8}, {surface: koro, type: stem}]
+
+- surface: mai
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: mai
+
+- surface: kuenda
+  status: analysed
+  analyses:
+    - pos: verb
+      lemma: enda
+      morphemes: [{surface: ku, type: noun-class-15}, {surface: enda, type: stem}]
+
+- surface: ndaenda
+  status: analysed
+  analyses:
+    - pos: verb
+      lemma: enda
+      morphemes: [{surface: nd, type: sagr-1sg}, {surface: a, type: tam-perfect}, {surface: enda, type: stem}]
+
+# Unknown word must not crash and must yield an explicit unknown status.
+- surface: qqqq
+  status: unknown_word
+  analyses: []

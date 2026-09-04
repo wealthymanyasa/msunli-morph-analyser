@@ -1,0 +1,12 @@
+# Shona ranking configuration — declarative.
+#
+# Lower score is preferred. The generic ranker interprets these penalties.
+
+ranking:
+  prefer_lemmas: true
+  penalties:
+    # A form without a resolved lemma is penalized.
+    no_lemma: 1.0
+    # More morphemes (longer segmentation) is mildly penalized; but V1
+    # analyses are short, so this seldom matters.
+    longer_segmentation: 0.1

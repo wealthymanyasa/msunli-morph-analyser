@@ -1,0 +1,25 @@
+# Shona constraints — declarative.
+#
+# Constraints are interpreted by the generic engine's constraint validator.
+# The `kind` selects a generic interpretation; `params` carry the values.
+# No Shona-specific logic lives in the engine.
+
+constraints:
+  # Enforce noun-class agreement between a prefix and its nominal stem.
+  # The generic validator reads singular/plural pairings from noun_classes.yaml
+  # (declarative). This rejects spurious shared-prefix (allomorph) matches:
+  # e.g. "mukadzi" should be class 1 (stem kadzi, noun_class 1), not class 3,
+  # even though mu- is an allomorph shared by both classes.
+  - id: noun-class-agreement
+    kind: noun_class_agreement
+    params: {}
+
+  # Verbal stems take the class-15 (infinitive) prefix only. The surface "ku-"
+  # is also an allomorph of class 17 (locative); without this restriction a
+  # bare verb stem like "enda" could be spuriously segmented as class-17, which
+  # is not a valid construction. Declarative: interpreted generically.
+  - id: verbal-infinitive-prefix
+    kind: affix_stem_pos
+    params:
+      stem_pos: verb
+      affix_classes: ["15"]
