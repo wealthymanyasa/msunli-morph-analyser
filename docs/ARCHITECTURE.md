@@ -36,8 +36,8 @@ src/morph/
     pack.py              LanguagePack contract (declarative data models)
   engine/
     __init__.py
-    interfaces.py        Normalizer, Lexicon, CandidateGenerator, Segmenter,
-                         FeatureUnifier, ConstraintValidator, CandidateRanker,
+    interfaces.py        Normalizer, CandidateGenerator, FeatureUnifier,
+                         ConstraintValidator, CandidateRanker,
                          AnalysisStrategy (ABCs)
     implementations.py   ConfigDriven, generic implementations
     strategy.py          DefaultAnalysisStrategy (pipeline orchestration)
@@ -113,9 +113,7 @@ implementation. All behaviour is driven by the pack:
 | Component (interface) | Implementation | Role |
 | --- | --- | --- |
 | `Normalizer` | `ConfigDrivenNormalizer` | applies pack normalization (lowercase + rules) |
-| `Lexicon` | `PackLexicon` | looks up pack lexical entries |
 | `CandidateGenerator` | `ConcatenativeCandidateGenerator` | morphotactics-driven segmentation |
-| `Segmenter` | `PackSegmenter` | builds rich `Morpheme`s from codes |
 | `FeatureUnifier` | `DefaultFeatureUnifier` | merges morpheme features |
 | `ConstraintValidator` | `DefaultConstraintValidator` | applies pack constraints |
 | `CandidateRanker` | `DefaultCandidateRanker` | deterministic ranking (lower score = better) |

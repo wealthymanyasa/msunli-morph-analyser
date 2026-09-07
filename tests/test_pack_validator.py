@@ -70,6 +70,63 @@ def test_undefined_morpheme_in_morphotactic_rejected(
     assert any("undefined morpheme id 'bogus'" in e for e in excinfo.value.errors)
 
 
+def test_slot_stem_pos_missing_params_rejected(
+    validator: LanguagePackValidator,
+) -> None:
+    data = sample_pack_data(
+        constraints=[{"id": "s", "kind": "slot_stem_pos", "params": {}}]
+    )
+    with pytest.raises(PackValidationError) as excinfo:
+        validator.validate(data)
+    assert any("affix_ids" in e for e in excinfo.value.errors)
+    assert any("stem_pos" in e for e in excinfo.value.errors)
+
+
+def test_slot_stem_pos_undefined_affix_rejected(
+    validator: LanguagePackValidator,
+) -> None:
+    data = sample_pack_data(
+        constraints=[
+            {
+                "id": "s",
+                "kind": "slot_stem_pos",
+                "params": {"affix_ids": ["bogus"], "stem_pos": "verb"},
+            }
+        ]
+    )
+    with pytest.raises(PackValidationError) as excinfo:
+        validator.validate(data)
+    assert any("undefined morpheme id 'bogus'" in e for e in excinfo.value.errors)
+
+
+def test_affix_stem_pos_missing_params_rejected(
+    validator: LanguagePackValidator,
+) -> None:
+    data = sample_pack_data(
+        constraints=[{"id": "a", "kind": "affix_stem_pos", "params": {}}]
+    )
+    with pytest.raises(PackValidationError) as excinfo:
+        validator.validate(data)
+    assert any("stem_pos" in e for e in excinfo.value.errors)
+    assert any("affix_classes" in e for e in excinfo.value.errors)
+
+
+def test_slot_stem_pos_valid_pack_accepted(
+    validator: LanguagePackValidator,
+) -> None:
+    data = sample_pack_data(
+        constraints=[
+            {
+                "id": "s",
+                "kind": "slot_stem_pos",
+                "params": {"affix_ids": ["plural"], "stem_pos": "verb"},
+            }
+        ]
+    )
+    pack = validator.validate(data)
+    assert pack.code == "xx"
+
+
 def test_empty_lexicon_rejected(validator: LanguagePackValidator) -> None:
     data = sample_pack_data(lexicon=[])
     with pytest.raises(PackValidationError):

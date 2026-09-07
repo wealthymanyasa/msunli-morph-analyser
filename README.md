@@ -15,7 +15,7 @@ The platform separates **generic morphology algorithms** from **declarative ling
 * REST API (`/api/v1`)
 * CLI (`morph`)
 * Language-independent testing and evaluation infrastructure
-* 93 automated tests passing
+* 107 automated tests passing
 * Ruff linting clean
 * Mypy type checking clean
 
@@ -57,9 +57,7 @@ Validated Language Pack
 Generic Morphology Engine
        │
        ├── Normalizer
-       ├── Lexicon
        ├── Candidate Generator
-       ├── Segmenter
        ├── Feature Unifier
        ├── Constraint Validator
        └── Candidate Ranker
@@ -253,7 +251,7 @@ The project uses automated tests to protect both the generic engine and the lang
 Current verification:
 
 ```text
-93 tests passed
+107 tests passed
 Ruff: clean
 Mypy: clean
 ```

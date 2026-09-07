@@ -23,3 +23,14 @@ constraints:
     params:
       stem_pos: verb
       affix_classes: ["15"]
+
+  # Conjugated-verb slots (1sg subject agreement + optional perfect) may only
+  # contain verb stems. Subject-agreement prefixes must not attach to nominal
+  # stems: e.g. "ndamai" (nd-a-mai) is not a valid Shona word — "mai" is a
+  # class-1a noun, only verb stems like "enda" accept this conjugation.
+  # Declarative: interpreted generically as a slot stem-POS restriction.
+  - id: verb-slot-stem-pos
+    kind: slot_stem_pos
+    params:
+      affix_ids: ["sagr-1sg", "tam-perfect"]
+      stem_pos: verb

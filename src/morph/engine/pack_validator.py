@@ -129,6 +129,11 @@ class LanguagePackValidator:
         for ref in sorted(referenced - morpheme_ids):
             errors.append(f"morphotactic rule references undefined morpheme id '{ref}'")
 
+        # Constraints of known kinds must declare the params the generic engine
+        # actually interprets, so a mis-written constraint can never silently
+        # degrade into a no-op.
+        errors.extend(self._validate_constraints(pack, morpheme_ids))
+
         # Lexicon entries must be non-empty strings.
         for entry in pack.lexicon:
             if not entry.surface:
@@ -145,6 +150,42 @@ class LanguagePackValidator:
                 if token:
                     referenced.add(token)
         return referenced
+
+    @staticmethod
+    def _validate_constraints(pack: LanguagePack, morpheme_ids: set[str]) -> list[str]:
+        errors: list[str] = []
+        for constraint in pack.constraints:
+            prefix = f"constraint '{constraint.id}'"
+            params = constraint.params
+
+            if constraint.kind == "affix_stem_pos":
+                if not params.get("stem_pos"):
+                    errors.append(
+                        f"{prefix} (kind 'affix_stem_pos') requires params.stem_pos"
+                    )
+                if not params.get("affix_classes"):
+                    errors.append(
+                        f"{prefix} (kind 'affix_stem_pos') requires non-empty "
+                        "params.affix_classes"
+                    )
+            elif constraint.kind == "slot_stem_pos":
+                affix_ids = params.get("affix_ids")
+                if not affix_ids:
+                    errors.append(
+                        f"{prefix} (kind 'slot_stem_pos') requires non-empty "
+                        "params.affix_ids"
+                    )
+                if not params.get("stem_pos"):
+                    errors.append(
+                        f"{prefix} (kind 'slot_stem_pos') requires params.stem_pos"
+                    )
+                unknown = sorted(set(affix_ids or []) - morpheme_ids)
+                for morpheme_id in unknown:
+                    errors.append(
+                        f"{prefix} references undefined morpheme id '{morpheme_id}' "
+                        "in params.affix_ids"
+                    )
+        return errors
 
     @staticmethod
     def _pydantic_errors(exc: ValidationError) -> list[str]:

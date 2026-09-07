@@ -15,7 +15,7 @@ from morph.domain.analysis import (
     Morpheme,
     MorphologicalAnalysis,
 )
-from morph.domain.pack import LanguagePack, LexicalEntry
+from morph.domain.pack import LanguagePack
 
 
 class Normalizer(ABC):
@@ -31,14 +31,6 @@ class Normalizer(ABC):
         """Return ``(normalized_string, changed)`` for the given surface form."""
 
 
-class Lexicon(ABC):
-    """Looks up lexical entries for a surface form within a language pack."""
-
-    @abstractmethod
-    def lookup(self, surface: str, pack: LanguagePack) -> list[LexicalEntry]:
-        """Return matching lexical entries for the surface form."""
-
-
 class CandidateGenerator(ABC):
     """Generates candidate morpheme segmentations for a surface form.
 
@@ -51,21 +43,6 @@ class CandidateGenerator(ABC):
         self, surface: str, normalized: str, pack: LanguagePack
     ) -> list[list[Morpheme]]:
         """Return candidate segmentations (list of morpheme lists)."""
-
-
-class Segmenter(ABC):
-    """Deterministically splits a candidate into ordered morphemes.
-
-    In practice this is a concrete approach for turning a token sequence into
-    structured morphemes; separated from candidate generation so the pipeline
-    remains composable.
-    """
-
-    @abstractmethod
-    def segment(
-        self, morpheme_codes: list[str], surface: str, pack: LanguagePack
-    ) -> list[Morpheme]:
-        """Build rich Morpheme objects from a list of morpheme type codes."""
 
 
 class FeatureUnifier(ABC):

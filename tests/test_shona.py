@@ -88,6 +88,18 @@ def test_conjugated_verb(shona_service: AnalysisService) -> None:
     ]
 
 
+def test_verb_slot_rejects_noun_stem(shona_service: AnalysisService) -> None:
+    """1sg perfect conjugations only combine with verb stems.
+
+    Non-words like ``ndamai`` (nd-a-mai, a noun stem in the verb slot) must
+    not be analysed. Regressed: previously the verb slot accepted any stem,
+    producing spurious analyses for nouns.
+    """
+    for surface in ("ndamai", "ndababa", "ndazai", "ndati", "ndapata"):
+        result = shona_service.analyze(surface, "sn")
+        assert result.status == AnalysisStatus.UNKNOWN_WORD, surface
+
+
 def test_unknown_word_no_crash(shona_service: AnalysisService) -> None:
     result = shona_service.analyze("zzzzz", "sn")
     assert result.status == AnalysisStatus.UNKNOWN_WORD

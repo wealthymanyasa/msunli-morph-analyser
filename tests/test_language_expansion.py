@@ -65,9 +65,13 @@ def _future_pack() -> dict:
         "constraints": [
             {
                 "id": "pl-noun-only",
-                "kind": "affix_stem_pos",
-                "affix_id": "pl",
-                "pos": "noun",
+                "kind": "slot_stem_pos",
+                "params": {"affix_ids": ["pl"], "stem_pos": "noun"},
+            },
+            {
+                "id": "past-verb-only",
+                "kind": "slot_stem_pos",
+                "params": {"affix_ids": ["past"], "stem_pos": "verb"},
             },
         ],
         "ranking": {
@@ -95,6 +99,25 @@ def test_future_pack_registers_and_analyses() -> None:
     assert a2.lemma == "glam"
     assert a2.pos == "verb"
     assert a2.features.get("tense") == "past"
+
+
+def test_future_pack_slot_position_restriction_enforced() -> None:
+    """Affixes may only combine with stems of the declared POS.
+
+    Regression guard: this pack previously declared a constraint whose params
+    the engine did not interpret, so the constraint silently did nothing.
+    """
+    service = AnalysisService()
+    service.register_pack(_future_pack())
+
+    # The plural infix -oj- is restricted to noun stems; 'lehop' conjugates a
+    # noun stem, so the past marker must reject it.
+    r = service.analyze("lehop", "fk")
+    assert r.status.value == "unknown_word"
+
+    # Valid combinations still analyse.
+    assert service.analyze("hopoj", "fk").status.value == "analysed"
+    assert service.analyze("leglam", "fk").status.value == "analysed"
 
 
 def test_evaluation_framework_works_on_future_pack(tmp_path: Path) -> None:

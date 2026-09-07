@@ -1,8 +1,8 @@
 """Default analysis strategy that orchestrates the full engine pipeline.
 
 This is the generic, language-agnostic orchestration. It wires together the
-normalizer, lexicon, candidate generator, segmenter, feature unifier,
-constraint validator and candidate ranker against a single language pack.
+normalizer, candidate generator, feature unifier, constraint validator and
+candidate ranker against a single language pack.
 """
 
 from __future__ import annotations

@@ -15,12 +15,12 @@ engine.
 
 **V1 delivers:**
 
-- Generic morphology engine with 7 configurable pipeline components
+- Generic morphology engine with 5 configurable pipeline components
 - Declarative Shona (`sn`) language pack (108 gold-standard test records)
 - REST API (`/api/v1`) with interactive OpenAPI documentation
 - CLI (`morph`) for terminal-based analysis
 - Language-independent evaluation framework
-- 102 automated tests, all passing
+- 107 automated tests, all passing
 - Clean ruff lint, clean mypy type checking
 - Docker support, CI/CD pipeline, dependency locking
 
@@ -81,9 +81,7 @@ Validated Language Pack (declarative YAML)
 Generic Morphology Engine
        |
        +-- Normalizer
-       +-- Lexicon
        +-- Candidate Generator
-       +-- Segmenter
        +-- Feature Unifier
        +-- Constraint Validator
        +-- Candidate Ranker
@@ -115,7 +113,9 @@ src/morph/
         analysis.py          AnalysisResult, MorphologicalAnalysis, Morpheme
         pack.py              LanguagePack, NounClass, morphotactic models
     engine/
-        interfaces.py        ABC contracts (Normalizer, Lexicon, etc.)
+        interfaces.py        ABC contracts (Normalizer, CandidateGenerator,
+                             FeatureUnifier, ConstraintValidator,
+                             CandidateRanker, AnalysisStrategy)
         implementations.py   Config-driven generic implementations
         strategy.py          DefaultAnalysisStrategy (pipeline orchestration)
         pack_validator.py    LanguagePackValidator
@@ -151,7 +151,7 @@ languages/
         tests/analyses.yaml
         evaluation/gold.yaml
 
-tests/                       15 test files, 102 tests
+tests/                       15 test files, 107 tests
 docs/                        4 existing docs + this document
 ```
 
@@ -212,7 +212,6 @@ A single morpheme in an analysis:
 | Component | Interface | Implementation | Role |
 | --- | --- | --- | --- |
 | Normalizer | `Normalizer` | `ConfigDrivenNormalizer` | Lowercase + custom rules |
-| Lexicon | `Lexicon` | `PackLexicon` | Stem lookup |
 | Candidate Generator | `CandidateGenerator` | `ConcatenativeCandidateGenerator` | Morphotactics-driven segmentation |
 | Feature Unifier | `FeatureUnifier` | `DefaultFeatureUnifier` | Merge morpheme features |
 | Constraint Validator | `ConstraintValidator` | `DefaultConstraintValidator` | Apply pack constraints |
@@ -236,6 +235,8 @@ Pack-declared constraint kinds include:
 - `no_missing_required_features`: candidates must carry required features
 - `noun_class_agreement`: prefix-stem agreement via noun class relations
 - `affix_stem_pos`: affix restricted to specific POS
+- `slot_stem_pos`: a construction's stem slot restricted to a specific POS
+  (e.g. the conjugated-verb slot must contain a verb stem)
 
 ---
 
@@ -267,6 +268,8 @@ Packs are validated by `LanguagePackValidator` before use:
 - Semantic version validation
 - Engine compatibility (major-version match)
 - Resource integrity (non-empty lexicon/morphemes, no undefined refs)
+- Constraint integrity (known constraint kinds must declare the params the
+  engine interprets, so constraints cannot silently degrade into no-ops)
 
 Invalid packs are rejected with structured errors.
 
@@ -459,7 +462,7 @@ print(report.render_markdown())
 
 - **Ruff**: lint + format checks
 - **Mypy**: strict type checking (Python 3.11)
-- **Pytest**: 102 tests, all passing
+- **Pytest**: 107 tests, all passing
 
 ### Separation Invariant
 

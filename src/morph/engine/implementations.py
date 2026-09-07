@@ -35,89 +35,6 @@ class ConfigDrivenNormalizer(interfaces.Normalizer):
         return result, result != surface
 
 
-class PackLexicon(interfaces.Lexicon):
-    """Lexicon backed by the pack's declarative lexical entries."""
-
-    def __init__(self) -> None:
-        self._index: dict[str, list[LexicalEntry]] = defaultdict(list)
-
-    def lookup(self, surface: str, pack: LanguagePack) -> list[LexicalEntry]:
-        matches = self._index.get(surface)
-        if matches is not None:
-            return list(matches)
-        entries: list[LexicalEntry] = []
-        for entry in pack.lexicon:
-            if entry.surface == surface:
-                entries.append(entry)
-        self._index[surface] = entries
-        return list(entries)
-
-
-class MorphemeSpecTable:
-    """Helper mapping morpheme type ids to their specs within a pack."""
-
-    def __init__(self, pack: LanguagePack) -> None:
-        self._by_id = {m.id: m for m in pack.morphemes}
-
-    def get(self, morpheme_id: str) -> MorphemeSpec | None:
-        return self._by_id.get(morpheme_id)
-
-
-class DirectCandidateGenerator(interfaces.CandidateGenerator):
-    """Generates candidate segmentations.
-
-    V1 strategy: if the normalized form matches a lexical root exactly, that
-    root candidate (possibly with an attached suffix morpheme) is generated.
-    This is deliberately simple and generic; richer segmentation is a later
-    concern driven by pack morphotactics.
-    """
-
-    def generate(
-        self, surface: str, normalized: str, pack: LanguagePack
-    ) -> list[list[Morpheme]]:
-        lexicon = PackLexicon()
-        roots = lexicon.lookup(normalized, pack)
-        candidates: list[list[Morpheme]] = []
-        for root in roots:
-            morphemes: list[Morpheme] = [
-                Morpheme(
-                    surface=normalized,
-                    type="root",
-                    lemma=root.lemma or root.surface,
-                    pos=root.pos,
-                    features=dict(root.features),
-                )
-            ]
-            candidates.append(morphemes)
-        return candidates
-
-
-class PackSegmenter(interfaces.Segmenter):
-    """Builds rich Morpheme objects from morpheme type code lists."""
-
-    def __init__(self) -> None:
-        self._tables: dict[str, MorphemeSpecTable] = {}
-
-    def segment(
-        self, morpheme_codes: list[str], surface: str, pack: LanguagePack
-    ) -> list[Morpheme]:
-        table = MorphemeSpecTable(pack)
-        result: list[Morpheme] = []
-        for code in morpheme_codes:
-            spec = table.get(code)
-            if spec is None:
-                raise ValueError(f"undefined morpheme id in segmentation: {code!r}")
-            result.append(
-                Morpheme(
-                    surface="",  # surface filled by the generator
-                    type=spec.id,
-                    gloss=spec.id,
-                    features=dict(spec.features),
-                )
-            )
-        return result
-
-
 class DefaultFeatureUnifier(interfaces.FeatureUnifier):
     """Merges each morpheme's feature dict into a single surface analysis.
 
@@ -163,6 +80,13 @@ class DefaultConstraintValidator(interfaces.ConstraintValidator):
         prefixes on such stems. This lets a pack express e.g. that verbal stems
         only take the infinitive class and not a homophonous locative class,
         keeping the rule declarative and language-agnostic.
+      - ``slot_stem_pos``: restricts which POS the anchoring stem may have when
+        a specific construction is present. ``params.affix_ids`` names the
+        affix morphemes that characterise the construction (e.g. subject
+        agreement / tense-aspect markers) and ``params.stem_pos`` names the
+        only POS allowed for the lexicon stem in those constructions. This lets
+        a pack express e.g. that a conjugated-verb slot may only contain verb
+        stems, so a subject-agreement prefix cannot attach to a noun stem.
 
     Unknown constraint kinds are ignored (their enforcement is out of scope).
     """
@@ -228,6 +152,10 @@ class DefaultConstraintValidator(interfaces.ConstraintValidator):
             return DefaultConstraintValidator._affix_stem_pos(
                 candidate, stem_type_ids, constraint.params
             )
+        if constraint.kind == "slot_stem_pos":
+            return DefaultConstraintValidator._slot_stem_pos(
+                candidate, stem_type_ids, constraint.params
+            )
         # Unknown constraint kinds: no-op (out of scope for V1).
         return True
 
@@ -277,6 +205,34 @@ class DefaultConstraintValidator(interfaces.ConstraintValidator):
                     and str(affix.features["noun_class"]) not in allowed
                 ):
                     return False
+        return True
+
+    @staticmethod
+    def _slot_stem_pos(
+        candidate: MorphologicalAnalysis,
+        stem_type_ids: set[str],
+        params: dict[str, Any],
+    ) -> bool:
+        affix_ids = params.get("affix_ids")
+        if not affix_ids:
+            return True
+        stem_pos = params.get("stem_pos")
+        if not stem_pos:
+            return True
+
+        affix_id_set = set(affix_ids)
+        construction_present = any(
+            m.type not in stem_type_ids and m.type in affix_id_set
+            for m in candidate.morphemes
+        )
+        if not construction_present:
+            return True  # restriction applies only in this construction
+
+        for m in candidate.morphemes:
+            if m.type not in stem_type_ids:
+                continue
+            if m.pos != stem_pos:
+                return False
         return True
 
 
