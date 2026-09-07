@@ -93,3 +93,147 @@
 - surface: qqqq
   status: unknown_word
   analyses: []
+
+# ── Curated shona-spacy imports (class 1/2 human nouns) ──────────────────
+# These lock in that entries curated from shona-spacy analyse correctly under
+# the existing noun-class-1/2 stem morphotactics.
+- surface: mupurisa
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: mupurisa
+      morphemes: [{surface: mu, type: noun-class-1}, {surface: purisa, type: stem}]
+
+- surface: vaporofita
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: muporofita
+      morphemes: [{surface: va, type: noun-class-2}, {surface: porofita, type: stem}]
+
+- surface: mukoma
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: mukoma
+      morphemes: [{surface: mu, type: noun-class-1}, {surface: koma, type: stem}]
+
+# ── Closed-class words (closed_class.yaml) ───────────────────────────────
+# These have NO prefix/stem segmentation: the whole surface is one
+# whole-word `closed_class` morpheme with the entry's lemma/POS/features.
+- surface: ini
+  status: analysed
+  analyses:
+    - pos: pron
+      lemma: ini
+      morphemes: [{surface: ini, type: closed_class}]
+      features: {person: "1", number: singular}
+
+- surface: kana
+  status: analysed
+  analyses:
+    - pos: cconj
+      lemma: kana
+      morphemes: [{surface: kana, type: closed_class}]
+
+- surface: mangwanani
+  status: analysed
+  analyses:
+    - pos: adv
+      lemma: mangwanani
+      morphemes: [{surface: mangwanani, type: closed_class}]
+
+- surface: uyu
+  status: analysed
+  analyses:
+    - pos: det
+      lemma: uyu
+      morphemes: [{surface: uyu, type: closed_class}]
+      features: {noun_class: "1", proximity: near}
+
+# ── Independent-evaluation resolutions (Prompt 10) ───────────────────────
+# Class-1 nouns (mwana, murimi, munin'ina, mudzidzisi) and independent
+# pronouns (iye, isu) curated from shona-spacy to resolve the clearest
+# resource-only disagreements in evaluation/independent.yaml.
+# `mwana` segments as the class-1 `mw-` allomorph + vowel-initial stem `ana`
+# (the allomorph is declared in morphemes.yaml; no new morphophonology).
+# `munin'ina` = `mu-` + stem `nin'ina`; the shona-spacy citation lemma `n'ina`
+# is a contracted root, not the literal concatenative stem.
+- surface: mwana
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: mwana
+      morphemes: [{surface: mw, type: noun-class-1}, {surface: ana, type: stem}]
+      features: {noun_class: "1", number: singular}
+
+- surface: murimi
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: murimi
+      morphemes: [{surface: mu, type: noun-class-1}, {surface: rimi, type: stem}]
+      features: {noun_class: "1", number: singular}
+
+- surface: munin'ina
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: munin'ina
+      morphemes: [{surface: mu, type: noun-class-1}, {surface: "nin'ina", type: stem}]
+      features: {noun_class: "1", number: singular}
+
+- surface: mudzidzisi
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: mudzidzisi
+      morphemes: [{surface: mu, type: noun-class-1}, {surface: dzidzisi, type: stem}]
+      features: {noun_class: "1", number: singular}
+
+- surface: iye
+  status: analysed
+  analyses:
+    - pos: pron
+      lemma: iye
+      morphemes: [{surface: iye, type: closed_class}]
+      features: {person: "3", number: singular}
+
+- surface: isu
+  status: analysed
+  analyses:
+    - pos: pron
+      lemma: isu
+      morphemes: [{surface: isu, type: closed_class}]
+      features: {person: "1", number: plural}
+
+# Closed-class lookup must not make unrelated unknown words analysable.
+- surface: ikramu
+  status: unknown_word
+  analyses: []
+
+# ── Multi-prefix morphotactics (declared in morphotactics.yaml) ──────────
+# The conjugated verb `ndaenda` above is the pack's working two-prefix
+# structure: nd- (sagr-1sg) + a- (tam-perfect) + stem.
+# Stacked nominal-prefix rules (ku-17+chi-7+stem, mu-18+mu-1+stem, mu-18+mu-3+stem,
+# ka-12+mu-1+stem): the outer locative classes 17/18 are declared exempt in
+# constraints.yaml (outer_classes), so ku-chi-koro, mu-mu-rume and mu-mu-sha
+# analyse with the outer class heading the surface. Class 12 (diminutive) is
+# NOT exempt, so ka-mu-kadzi stays unknown_word.
+- surface: kuchikoro
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: chikoro
+      morphemes: [{surface: ku, type: noun-class-17}, {surface: chi, type: noun-class-7}, {surface: koro, type: stem}]
+      features: {noun_class: "17", number: singular}
+- surface: mumusha
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: musha
+      morphemes: [{surface: mu, type: noun-class-18}, {surface: mu, type: noun-class-3}, {surface: sha, type: stem}]
+      features: {noun_class: "18", number: singular}
+- surface: kamukadzi
+  status: unknown_word
+  analyses: []

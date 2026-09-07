@@ -35,7 +35,9 @@ class CandidateGenerator(ABC):
     """Generates candidate morpheme segmentations for a surface form.
 
     Returns all candidate segmentations (each a list of morphemes); the engine
-    does not silently discard any candidate here.
+    does not silently discard any candidate here. A candidate may also be a
+    single whole-word ``closed_class`` morpheme for lexical items that have no
+    segmentation (see ``pack.closed_class``).
     """
 
     @abstractmethod

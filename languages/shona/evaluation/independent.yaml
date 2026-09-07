@@ -1,0 +1,945 @@
+# Independent Shona evaluation set.
+#
+# Purpose
+# -------
+# The `gold.yaml` dataset in this directory is derived from the engine's own
+# verified output, so a run over it is necessarily perfect. This file is a
+# SEPARATE, independent set curated from the MIT-licensed reference lexicon
+# `shona-spacy/shona_spacy/data/shona_lexicon.json` (READ-ONLY) so that the
+# evaluator measures the engine against an *external* reference rather than
+# against itself.
+#
+# Independence & honesty
+# ----------------------
+# - The expected analysis in `analyses` is the independent truth established by
+#   manually inspecting the reference annotation (and standard chiShona
+#   grammar), NOT whatever the engine happens to produce.
+# - `source_annotation` records the *reference lexicon's* annotation verbatim.
+#   It is surfaced in the failure report verbatim and never affects scoring.
+# - `verification_status` records the outcome of comparing the reference with
+#   the engine:
+#     * `agree`                      — reference and engine agree on structure.
+#     * `disagree_msunli_unknown`    — the word is real (per reference) but the
+#       current MSUNLI pack does not analyse it. This is an honest limitation,
+#       reported, not fixed here.
+#     * `disagree_lemma_convention`  — structure agrees but lemma notation
+#       differs (reference stores bare stems; the pack stores prefixed lemmas).
+#     * `disagree_pos`               — engine analyses a word but tags it with a
+#       different POS than the reference.
+#
+# Lemma-notation divergence
+# -------------------------
+# The reference lexicon stores lemmas as BARE STEMS (e.g. `rume` for `Murume`),
+# while this pack's `lexicon.yaml` deliberately stores lemmas as PREFIXED
+# protolemmas (e.g. `murume`). Both are defensible citation forms. The expected
+# analysis below uses the pack's prefixed-lemma convention (so lemma scoring is
+# meaningful and consistent), and `source_annotation.lemma` records the reference
+# bare-stem form so the divergence is explicit rather than hidden.
+#
+# Coverage: noun singulars (class 1), noun plurals (class 2), locatives
+# (classes 17/18), class-19 `pf-` nouns, class-20 `ku-` nominalisations,
+# diminutives/augmentatives, and closed-class words (pronouns, demonstratives,
+# adverbs). Several records deliberately exercise shared/multiple-prefix and
+# low-coverage areas and therefore expose genuine disagreements.
+
+- surface: murume
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Murume
+    lemma: rume
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: murume
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: rume
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: mukadzi
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mukadzi
+    lemma: kadzi
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: mukadzi
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: kadzi
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: mukomana
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mukomana
+    lemma: komana
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: mukomana
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: komana
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: musikana
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: musikana
+    lemma: sikana
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: musikana
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: sikana
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: mukuwasha
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mukuwasha
+    lemma: kuWasha
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: mukuwasha
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: kuwasha
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: mukoma
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mukoma
+    lemma: koma
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: mukoma
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: koma
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: mupfumi
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mupfumi
+    lemma: pfumi
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: mupfumi
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: pfumi
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: murwere
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Murwere
+    lemma: rwere
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: murwere
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: rwere
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: mupurisa
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mupurisa
+    lemma: purisa
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: false
+  analyses:
+  - lemma: mupurisa
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: purisa
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+# ── Class 1 singulars the engine does NOT yet analyse (real words) ────────
+- surface: mwana
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mwana
+    lemma: mwana
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: mwana
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: ana
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: murimi
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Murimi
+    lemma: rimi
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: murimi
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: rimi
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: munin'ina
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: "Munin'ina"
+    lemma: "n'ina"
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: munin'ina
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: "n'ina"
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+- surface: mudzidzisi
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mudzidzisi
+    lemma: dzidzisi
+    pos: NOUN
+    noun_class: "1"
+    verified_manually: false
+  analyses:
+  - lemma: mudzidzisi
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: dzidzisi
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
+
+# ── Class 2 plurals (engine analyses) ─────────────────────────────────────
+- surface: varume
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Varume
+    lemma: rume
+    pos: NOUN
+    noun_class: "2"
+    verified_manually: true
+  analyses:
+  - lemma: murume
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: rume
+      type: stem
+    features:
+      noun_class: "2"
+      number: plural
+
+- surface: vakadzi
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Vakadzi
+    lemma: kadzi
+    pos: NOUN
+    noun_class: "2"
+    verified_manually: true
+  analyses:
+  - lemma: mukadzi
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: kadzi
+      type: stem
+    features:
+      noun_class: "2"
+      number: plural
+
+- surface: vakomana
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Vakomana
+    lemma: komana
+    pos: NOUN
+    noun_class: "2"
+    verified_manually: true
+  analyses:
+  - lemma: mukomana
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: komana
+      type: stem
+    features:
+      noun_class: "2"
+      number: plural
+
+- surface: vasikana
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: vasikana
+    lemma: sikana
+    pos: NOUN
+    noun_class: "2"
+    verified_manually: true
+  analyses:
+  - lemma: musikana
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: sikana
+      type: stem
+    features:
+      noun_class: "2"
+      number: plural
+
+- surface: vanhu
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Vanhu
+    lemma: nhu
+    pos: NOUN
+    noun_class: "2"
+    verified_manually: true
+  analyses:
+  - lemma: munhu
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: nhu
+      type: stem
+    features:
+      noun_class: "2"
+      number: plural
+
+- surface: vaporofita
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Vaporofita
+    lemma: porofita
+    pos: NOUN
+    noun_class: "2"
+    verified_manually: false
+  analyses:
+  - lemma: muporofita
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: porofita
+      type: stem
+    features:
+      noun_class: "2"
+      number: plural
+
+- surface: vakwasha
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Vakwasha
+    lemma: kuWasha
+    pos: NOUN
+    noun_class: "2"
+    verified_manually: true
+  analyses:
+  - lemma: mukuwasha
+    pos: noun
+    morphemes:
+    - surface: va
+      type: noun-class-2
+    - surface: kwasha
+      type: stem
+    features:
+      noun_class: "2"
+      number: plural
+
+# ── Locatives (classes 17 `ku-` / 18 `mu-`) — engine limitation ──────────
+- surface: kuchikoro
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Kuchikoro
+    lemma: chikoro
+    pos: NOUN
+    noun_class: "17"
+    prefix: ku-
+    verified_manually: true
+  analyses:
+  - lemma: chikoro
+    pos: noun
+    morphemes:
+    - surface: ku
+      type: noun-class-17
+    - surface: chi
+      type: noun-class-7
+    - surface: koro
+      type: stem
+    features:
+      noun_class: "17"
+      number: singular
+
+- surface: mumusha
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mumusha
+    lemma: musha
+    pos: NOUN
+    noun_class: "18"
+    prefix: mu-
+    verified_manually: true
+  analyses:
+  - lemma: musha
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-18
+    - surface: musha
+      type: stem
+    features:
+      noun_class: "18"
+      number: singular
+
+- surface: mumba
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Mumba
+    lemma: imba
+    pos: NOUN
+    noun_class: "18"
+    prefix: mu-
+    verified_manually: true
+  analyses:
+  - lemma: imba
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-18
+    - surface: mba
+      type: stem
+    features:
+      noun_class: "18"
+      number: singular
+
+- surface: murwizi
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Murwizi
+    lemma: rwizi
+    pos: NOUN
+    noun_class: "18"
+    prefix: mu-
+    verified_manually: true
+  analyses:
+  - lemma: rwizi
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-18
+    - surface: rwizi
+      type: stem
+    features:
+      noun_class: "18"
+      number: singular
+
+# ── Class 19 (`pf-` nominal prefix) — engine limitation ──────────────────
+- surface: pfungwa
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Pfungwa
+    lemma: fungwa
+    pos: NOUN
+    noun_class: "19"
+    prefix: pf-
+    verified_manually: true
+  analyses:
+  - lemma: pfungwa
+    pos: noun
+    morphemes:
+    - surface: pf
+      type: noun-class-19
+    - surface: ungwa
+      type: stem
+    features:
+      noun_class: "19"
+      number: singular
+
+- surface: pfumo
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Pfumo
+    lemma: fumo
+    pos: NOUN
+    noun_class: "19"
+    prefix: pf-
+    verified_manually: true
+  analyses:
+  - lemma: pfumo
+    pos: noun
+    morphemes:
+    - surface: pf
+      type: noun-class-19
+    - surface: umo
+      type: stem
+    features:
+      noun_class: "19"
+      number: singular
+
+- surface: pfuma
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Pfuma
+    lemma: fuma
+    pos: NOUN
+    noun_class: "19"
+    prefix: pf-
+    verified_manually: true
+  analyses:
+  - lemma: pfuma
+    pos: noun
+    morphemes:
+    - surface: pf
+      type: noun-class-19
+    - surface: uma
+      type: stem
+    features:
+      noun_class: "19"
+      number: singular
+
+# ── Class 20 (`ku-` nominalisations) ──────────────────────────────────────
+- surface: kufamba
+  status: analysed
+  verification_status: disagree_pos
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Kufamba
+    lemma: famba
+    pos: VERB_NOMINAL
+    noun_class: "20"
+    prefix: ku-
+    verified_manually: true
+  analyses:
+  - lemma: famba
+    pos: noun
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: famba
+      type: stem
+    features:
+      noun_class: "15"
+      number: singular
+      pos: verbal_infinitive
+
+- surface: kudzidza
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Kudzidza
+    lemma: dzidza
+    pos: VERB_NOMINAL
+    noun_class: "20"
+    prefix: ku-
+    verified_manually: true
+  analyses:
+  - lemma: dzidza
+    pos: noun
+    morphemes:
+    - surface: ku
+      type: noun-class-15
+    - surface: dzidza
+      type: stem
+    features:
+      noun_class: "15"
+      number: singular
+      pos: verbal_infinitive
+
+# ── Diminutives / augmentatives — engine limitation ──────────────────────
+- surface: kamwana
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Kamwana
+    lemma: mwana
+    pos: NOUN
+    noun_class: "12"
+    prefix: ka-
+    verified_manually: true
+  analyses:
+  - lemma: kamwana
+    pos: noun
+    morphemes:
+    - surface: ka
+      type: noun-class-12
+    - surface: mwana
+      type: stem
+    features:
+      noun_class: "12"
+      number: singular
+
+- surface: kamukadzi
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Kamukadzi
+    lemma: kamukadzi
+    pos: NOUN
+    noun_class: "12"
+    prefix: ka-
+    verified_manually: false
+  analyses:
+  - lemma: kamukadzi
+    pos: noun
+    morphemes:
+    - surface: ka
+      type: noun-class-12
+    - surface: mu
+      type: noun-class-1
+    - surface: kadzi
+      type: stem
+    features:
+      noun_class: "12"
+      number: singular
+
+- surface: zimoto
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Zimoto
+    lemma: moto
+    pos: NOUN
+    noun_class: "21"
+    prefix: zi-
+    verified_manually: false
+  analyses:
+  - lemma: zimoto
+    pos: noun
+    morphemes:
+    - surface: zi
+      type: noun-class-21
+    - surface: moto
+      type: stem
+    features:
+      noun_class: "21"
+      number: singular
+
+# ── Closed class (engine handles) ─────────────────────────────────────────
+- surface: ini
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json), closed_class.yaml; manually inspected
+  source_annotation:
+    token: Ini
+    lemma: ini
+    pos: PRON
+    verified_manually: true
+  analyses:
+  - lemma: ini
+    pos: pron
+    morphemes:
+    - surface: ini
+      type: closed_class
+    features:
+      person: "1"
+      number: singular
+
+- surface: iwe
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json), closed_class.yaml; manually inspected
+  source_annotation:
+    token: Iwe
+    lemma: iwe
+    pos: PRON
+    verified_manually: true
+  analyses:
+  - lemma: iwe
+    pos: pron
+    morphemes:
+    - surface: iwe
+      type: closed_class
+    features:
+      person: "2"
+      number: singular
+
+- surface: ivo
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json), closed_class.yaml; manually inspected
+  source_annotation:
+    token: Ivo
+    lemma: ivo
+    pos: PRON
+    verified_manually: true
+  analyses:
+  - lemma: ivo
+    pos: pron
+    morphemes:
+    - surface: ivo
+      type: closed_class
+    features:
+      person: "3"
+      number: plural
+
+- surface: uyu
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json), closed_class.yaml; manually inspected
+  source_annotation:
+    token: Uyu
+    lemma: uyu
+    pos: DET
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: uyu
+    pos: det
+    morphemes:
+    - surface: uyu
+      type: closed_class
+    features:
+      noun_class: "1"
+      proximity: near
+
+- surface: uyo
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json), closed_class.yaml; manually inspected
+  source_annotation:
+    token: Uyo
+    lemma: uyo
+    pos: DET
+    noun_class: "1"
+    verified_manually: true
+  analyses:
+  - lemma: uyo
+    pos: det
+    morphemes:
+    - surface: uyo
+      type: closed_class
+    features:
+      noun_class: "1"
+      proximity: far
+
+- surface: ichi
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json), closed_class.yaml; manually inspected
+  source_annotation:
+    token: Ichi
+    lemma: ichi
+    pos: DET
+    noun_class: "7"
+    verified_manually: true
+  analyses:
+  - lemma: ichi
+    pos: det
+    morphemes:
+    - surface: ichi
+      type: closed_class
+    features:
+      noun_class: "7"
+      proximity: near
+
+- surface: mangwanani
+  status: analysed
+  verification_status: agree
+  provenance: shona-spacy (shona_lexicon.json), closed_class.yaml; manually inspected
+  source_annotation:
+    token: Mangwanani
+    lemma: mangwanani
+    pos: ADV
+    verified_manually: false
+  analyses:
+  - lemma: mangwanani
+    pos: adv
+    morphemes:
+    - surface: mangwanani
+      type: closed_class
+    features: {}
+
+# ── Closed class the engine does NOT yet handle ───────────────────────────
+- surface: iye
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Iye
+    lemma: iye
+    pos: PRON
+    verified_manually: true
+  analyses:
+  - lemma: iye
+    pos: pron
+    morphemes:
+    - surface: iye
+      type: closed_class
+    features:
+      person: "3"
+      number: singular
+
+- surface: isu
+  status: analysed
+  verification_status: disagree_msunli_unknown
+  provenance: shona-spacy (shona_lexicon.json); manually inspected
+  source_annotation:
+    token: Isu
+    lemma: isu
+    pos: PRON
+    verified_manually: true
+  analyses:
+  - lemma: isu
+    pos: pron
+    morphemes:
+    - surface: isu
+      type: closed_class
+    features:
+      person: "1"
+      number: plural

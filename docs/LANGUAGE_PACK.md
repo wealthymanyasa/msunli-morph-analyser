@@ -17,6 +17,7 @@ languages/<code>/
 ├── manifest.yaml        # required — metadata
 ├── normalization.yaml   # optional
 ├── lexicon.yaml         # optional   (stem inventory)
+├── closed_class.yaml    # optional   (whole-word unsegmentable lexical items)
 ├── morphemes.yaml       # optional   (affix/stem morphemes)
 ├── morphotactics.yaml   # optional   (valid morpheme sequences)
 ├── paradigms.yaml       # optional   (reserved)
@@ -95,6 +96,51 @@ morpheme ids) and `noun_classes.yaml` (`surface_allomorphs`,
 `has_zero_prefix`). The engine interprets these as data; it does not hard-code
 them.
 
+### Lexicon (`lexicon.yaml`)
+
+Lexicon entries are bare **stems** (the part after a noun-class/verbal prefix).
+Each entry may declare:
+
+- `surface` — the stem (matched by the anchoring `stem` morpheme)
+- `lemma` — the dictionary form (e.g. the prefixed full word for nouns)
+- `pos` — `noun` / `verb`, etc.
+- `features` — grammatical features, e.g. `noun_class`, `number`
+- `provenance` — optional per-entry source (e.g. `shona-spacy
+  (shona_lexicon.json)`); resource-level provenance lives in `resources.yaml`
+
+```yaml
+- surface: koma
+  lemma: mukoma
+  pos: noun
+  features:
+    noun_class: "1"
+    number: singular
+  provenance: "shona-spacy (shona_lexicon.json)"
+```
+
+### Closed-class words (`closed_class.yaml`)
+
+Closed-class items (pronouns, conjunctions, adverbs, determiners, …) have **no
+prefix/stem segmentation**: the surface form IS the whole word. They are
+declared as whole-word lexical entries (same `LexicalEntry` schema as the
+lexicon: `surface` / `lemma` / `pos` / optional `features` / optional
+`provenance`), and the generic engine analyses any input that matches a
+closed-class surface exactly as a single whole-word `closed_class` morpheme —
+no affixal segmentation is attempted for that word.
+
+```yaml
+closed_class:
+  - surface: kana
+    lemma: kana
+    pos: cconj
+    provenance: "shona-spacy (shona_lexicon.json)"
+```
+
+Because matching is an exact, whole-surface lookup, closed-class entries never
+interfere with noun/verb segmentation or with unrelated unknown words. This
+mechanism is language-independent — any language pack may ship a
+`closed_class.yaml` with no engine changes.
+
 ### Morphemes (`morphemes.yaml`)
 
 Each morpheme declares:
@@ -118,10 +164,17 @@ morphotactics:
     sequence: "noun-class-15 stem"    # infinitive ku- → verb stem
   - id: sagr-tam-stem
     sequence: "sagr-1sg tam-perfect? stem"   # subject agr → (TAM) → stem
+  - id: locative-17-over-class-7
+    sequence: "noun-class-17 noun-class-7 stem"   # ku- → chi- → stem (two prefixes)
 ```
 
 Token grammar: space-separated morpheme ids; a trailing `?` marks optional.
-The generic engine interprets these sequences.
+Rules are **explicit sequential slots** — a rule may carry any number of prefix
+slots before the anchoring stem (e.g. `prefix1 prefix2 stem`), and the engine
+stacks them generically in surface order. There is no grammar framework, no
+grouping and no operator beyond the optional `?`. The Shona pack ships three
+stacked nominal-prefix rules as demonstrations (see `morphotactics.yaml`); the
+generic engine interprets these sequences.
 
 ### Features
 

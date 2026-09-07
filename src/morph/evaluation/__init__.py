@@ -63,9 +63,14 @@ class GoldRecord(BaseModel):
 
     ``status`` follows :class:`~morph.domain.analysis.AnalysisStatus`. For
     analysable forms one or more ``analyses`` are given; the first is the
-    canonical reference used for the accuracy metrics. ``alternative_analyses``
-    and ``provenance`` are optional documentation fields that do not affect
-    scoring.
+    canonical reference used for the accuracy metrics. ``alternative_analyses``,
+    ``provenance``, ``source_annotation`` and ``verification_status`` are
+    optional documentation fields that do not affect scoring.
+
+    ``source_annotation`` records the external reference (e.g. an independent
+    lexicon) annotation for the surface so an independent dataset can be
+    compared to the engine without overwriting its conclusions; it is surfaced
+    verbatim in the failure report rather than influencing any metric.
     """
 
     surface: str
@@ -73,6 +78,16 @@ class GoldRecord(BaseModel):
     analyses: list[GoldAnalysis] = Field(default_factory=list)
     alternative_analyses: list[GoldAnalysis] = Field(default_factory=list)
     provenance: str | None = None
+    source_annotation: dict[str, Any] = Field(
+        default_factory=dict,
+        description="External source annotation for this surface (documentation "
+        "only; never scored).",
+    )
+    verification_status: str | None = Field(
+        default=None,
+        description="How this record was verified, e.g. 'manually_verified' or "
+        "'disagree_msunli_unknown' (documentation only; never scored).",
+    )
 
 
 class Metrics(BaseModel):
@@ -229,6 +244,8 @@ def run_evaluation(
                     "expected_status": record.status,
                     "actual": _format_result(service.analyze(record.surface, language)),
                     "provenance": record.provenance,
+                    "source_annotation": record.source_annotation,
+                    "verification_status": record.verification_status,
                 }
             )
 

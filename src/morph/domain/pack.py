@@ -62,7 +62,15 @@ class NormalizationConfig(BaseModel):
 
 
 class LexicalEntry(BaseModel):
-    """A single lexical entry (root/lemma) with its features."""
+    """A single lexical entry with its lemma, POS and features.
+
+    Used for two distinct kinds of data:
+    - **lexicon** entries: bare stems combined with prefixes/suffixes via the
+      morphotactics;
+    - **closed_class** entries: whole-word lexical units (pronouns, conjunctions,
+      adverbs, determiners, ...) with no prefix/stem segmentation. The surface
+      is the full word form.
+    """
 
     model_config = ConfigDict(frozen=True)
 
@@ -70,6 +78,10 @@ class LexicalEntry(BaseModel):
     lemma: str | None = Field(default=None)
     pos: str | None = Field(default=None)
     features: dict[str, Any] = Field(default_factory=dict)
+    provenance: str | None = Field(
+        default=None,
+        description="Optional per-entry provenance (e.g. 'corpus (corpus-1.json)')",
+    )
 
 
 class MorphemeSpec(BaseModel):
@@ -236,6 +248,12 @@ class LanguagePack(BaseModel):
     metadata: LanguageMetadata
     normalization: NormalizationConfig = Field(default_factory=NormalizationConfig)
     lexicon: list[LexicalEntry] = Field(default_factory=list)
+    closed_class: list[LexicalEntry] = Field(
+        default_factory=list,
+        description="Whole-word lexical units with no prefix/stem segmentation "
+        "(e.g. pronouns, conjunctions, adverbs, determiners). Each entry's "
+        "surface must match the whole input word exactly.",
+    )
     morphemes: list[MorphemeSpec] = Field(default_factory=list)
     morphotactics: list[MorphotacticRule] = Field(default_factory=list)
     paradigms: list[Paradigm] = Field(default_factory=list)

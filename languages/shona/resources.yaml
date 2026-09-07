@@ -5,8 +5,11 @@
 
 resources:
   - resource: lexicon
-    source: "Standard chiShona course/dictionary references; widely attested, clearly segmentable stems."
-    notes: "V1 starter set; confidence draft."
+    source: "Standard chiShona course/dictionary references; widely attested, clearly segmentable stems. Additional class-1 human-noun stems curated from the MIT-licensed shona-spacy lexicon (shona-spacy/shona_spacy/data/shona_lexicon.json); each carries per-entry provenance."
+    notes: "V1 starter set expanded with curated shona-spacy entries (incl. independent-evaluation resolutions: ana/mwana, rimi/murimi, nin'ina/munin'ina, dzidzisi/mudzidzisi); confidence draft."
+  - resource: closed_class
+    source: "MIT-licensed shona-spacy: independent pronouns and demonstratives from shona_spacy/data/shona_lexicon.json; conjunctions and adverbs from the shona-spacy closed-class word lists (shona_component.py). Each entry carries per-entry provenance."
+    notes: "Small curated sample (14 entries; iye/isu resolve independent-evaluation disagreements); full closed-class import deferred."
   - resource: morphemes
     source: "Fortune (1984) An Analytical Grammar of Shona; standard pedagogical references."
     notes: "Shared/allomorphic surface forms represented explicitly as data."

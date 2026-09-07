@@ -1294,8 +1294,19 @@
   status: unknown_word
   provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
 - surface: mudzidzisi
-  status: unknown_word
-  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+  status: analysed
+  provenance: shona-spacy (shona_lexicon.json) — class-1 noun; V1 lexicon growth (formerly a true-negative probe)
+  analyses:
+  - lemma: mudzidzisi
+    pos: noun
+    morphemes:
+    - surface: mu
+      type: noun-class-1
+    - surface: dzidzisi
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular
 - surface: harahwa
   status: unknown_word
   provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
@@ -1339,5 +1350,16 @@
   status: unknown_word
   provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
 - surface: mwana
-  status: unknown_word
-  provenance: Not present in the V1 Shona lexicon / not derivable (true negative probe)
+  status: analysed
+  provenance: shona-spacy (shona_lexicon.json) — class-1 noun (mw- + ana); V1 lexicon growth (formerly a true-negative probe)
+  analyses:
+  - lemma: mwana
+    pos: noun
+    morphemes:
+    - surface: mw
+      type: noun-class-1
+    - surface: ana
+      type: stem
+    features:
+      noun_class: "1"
+      number: singular

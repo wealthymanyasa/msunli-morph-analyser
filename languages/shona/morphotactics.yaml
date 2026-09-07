@@ -5,10 +5,15 @@
 # whose morpheme is `sources_lexicon: true` are matched against the lexicon;
 # other tokens match one of their declared surface aliases.
 #
+# Rules are explicit SEQUENTIAL SLOTS — a rule may carry any number of prefix
+# slots before the anchoring stem (e.g. `prefix1 prefix2 stem`); no grammar
+# operators, grouping or variables are involved.
+#
 # Represented structures include:
 #   - noun-class prefix  →  nominal stem
 #   - infinitive ku-     →  verbal infinitive
-#   - subject-agreement  →  tense/aspect →  verb stem
+#   - subject-agreement  →  tense/aspect →  verb stem         (two prefixes)
+#   - locative ku-  →  class-7 prefix →  nominal stem         (two prefixes)
 
 morphotactics:
   # Noun: single noun-class prefix + stem.
@@ -61,3 +66,24 @@ morphotactics:
   # e.g. nd-a-enda -> "I have gone".
   - id: sagr-tam-stem
     sequence: "sagr-1sg tam-perfect? stem"
+
+  # ── Multi-prefix stacking (declared demonstration) ──────────────────────
+  # Stacked nominal prefixes: an outer locative/diminutive prefix slot in
+  # front of an inner noun-class prefix slot, then the stem. Same explicit
+  # sequential-slot grammar — the engine stacks any number of prefix slots
+  # before the anchoring stem (ku-chi-koro, mu-mu-rume, mu-mu-sha, ka-mu-kadzi).
+  #
+  # The generic noun-class-agreement constraint treats locative classes 16/17/18
+  # (declared in constraints.yaml outer_classes) as valid OUTER substitutes when
+  # they stack over an inner agreeing prefix, so ku-chi-koro (class 17 over
+  # class 7), mu-mu-rume (class 18 over class 1) and mu-mu-sha (class 18 over
+  # class 3) analyse. The diminutive class 12 is not an exempt outer class, so
+  # ka-mu-kadzi is still rejected.
+  - id: locative-17-over-class-7
+    sequence: "noun-class-17 noun-class-7 stem"   # ku- + chi- + stem  (eg ku-chi-koro)
+  - id: locative-18-over-class-1
+    sequence: "noun-class-18 noun-class-1 stem"   # mu- + mu- + stem   (eg mu-mu-rume)
+  - id: locative-18-over-class-3
+    sequence: "noun-class-18 noun-class-3 stem"   # mu- + mu- + stem   (eg mu-mu-sha)
+  - id: diminutive-12-over-class-1
+    sequence: "noun-class-12 noun-class-1 stem"   # ka- + mu- + stem   (eg ka-mu-kadzi)

@@ -10,9 +10,17 @@ constraints:
   # (declarative). This rejects spurious shared-prefix (allomorph) matches:
   # e.g. "mukadzi" should be class 1 (stem kadzi, noun_class 1), not class 3,
   # even though mu- is an allomorph shared by both classes.
+  #
+  # outer_classes declares the locative classes (16/17/18) that a stacked
+  # construction may use as an EXTERNAL prefix over an inner agreeing class
+  # (ku-chi-koro -> class 17, mu-mu-rume -> class 18). The exemption is generic:
+  # a single such prefix over a disagreeing stem (e.g. ku- over a class-7 stem)
+  # is still rejected, and the inner prefix must still agree. The diminutive
+  # class 12 is deliberately NOT listed, so ka-mu-kadzi stays invalid.
   - id: noun-class-agreement
     kind: noun_class_agreement
-    params: {}
+    params:
+      outer_classes: ["16", "17", "18"]
 
   # Verbal stems take the class-15 (infinitive) prefix only. The surface "ku-"
   # is also an allomorph of class 17 (locative); without this restriction a

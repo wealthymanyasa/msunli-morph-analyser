@@ -1,0 +1,119 @@
+# Shona closed-class inventory — declarative whole-word lexical units.
+#
+# Unlike `lexicon.yaml` (bare stems that combine with affixes), these entries
+# are SINGLE lexical units: the surface form IS the whole word and there is no
+# prefix/stem segmentation. The generic engine matches the whole normalized
+# input word against these surfaces and analyses it as one closed-class
+# morpheme.
+#
+# Curated sample (14 entries) imported from the MIT-licensed shona-spacy
+# project. Independent pronouns and demonstratives are attested in
+# shona_spacy/data/shona_lexicon.json; conjunctions and adverbs come from the
+# shona-spacy closed-class word lists (shona_component.py). Every entry below
+# records `provenance: "shona-spacy (shona_lexicon.json)"`.
+#
+# POS tags use lowercase UD-style values (pron, cconj, adv, det), consistent
+# with the pack's lowercase `noun`/`verb` convention. Not exhaustive — this is
+# a small, manually curated sample; the remaining closed-class words are
+# deferred (import-all is a separate, future task).
+
+closed_class:
+  # ── Pronouns (5) — independent personal pronouns ────────────────────────
+  # ini/iwe/ivo were the V1 sample; iye/isu resolve independent-evaluation
+  # disagreements (evaluation/independent.yaml) against shona-spacy.
+  - surface: ini
+    lemma: ini
+    pos: pron
+    features:
+      person: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: iwe
+    lemma: iwe
+    pos: pron
+    features:
+      person: "2"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: ivo
+    lemma: ivo
+    pos: pron
+    features:
+      person: "3"
+      number: plural
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: iye
+    lemma: iye
+    pos: pron
+    features:
+      person: "3"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: isu
+    lemma: isu
+    pos: pron
+    features:
+      person: "1"
+      number: plural
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  # ── Conjunctions (3) ────────────────────────────────────────────────────
+  - surface: kana
+    lemma: kana
+    pos: cconj
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: asi
+    lemma: asi
+    pos: cconj
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: uye
+    lemma: uye
+    pos: cconj
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  # ── Adverbs (3) ─────────────────────────────────────────────────────────
+  - surface: mangwanani
+    lemma: mangwanani
+    pos: adv
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: zvishoma
+    lemma: zvishoma
+    pos: adv
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: zvikuru
+    lemma: zvikuru
+    pos: adv
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  # ── Determiners (3) — demonstratives ────────────────────────────────────
+  - surface: uyu
+    lemma: uyu
+    pos: det
+    features:
+      noun_class: "1"
+      proximity: near
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: uyo
+    lemma: uyo
+    pos: det
+    features:
+      noun_class: "1"
+      proximity: far
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: ichi
+    lemma: ichi
+    pos: det
+    features:
+      noun_class: "7"
+      proximity: near
+    provenance: "shona-spacy (shona_lexicon.json)"

@@ -139,6 +139,12 @@ class LanguagePackValidator:
             if not entry.surface:
                 errors.append("lexicon contains an entry with an empty surface")
 
+        # Closed-class entries must be non-empty strings (they are matched
+        # against the whole input word).
+        for entry in pack.closed_class:
+            if not entry.surface:
+                errors.append("closed_class contains an entry with an empty surface")
+
         return errors
 
     @staticmethod
@@ -158,7 +164,14 @@ class LanguagePackValidator:
             prefix = f"constraint '{constraint.id}'"
             params = constraint.params
 
-            if constraint.kind == "affix_stem_pos":
+            if constraint.kind == "noun_class_agreement":
+                outer = params.get("outer_classes")
+                if outer is not None and (not isinstance(outer, list) or not outer):
+                    errors.append(
+                        f"{prefix} (kind 'noun_class_agreement') requires "
+                        "params.outer_classes to be a non-empty list when declared"
+                    )
+            elif constraint.kind == "affix_stem_pos":
                 if not params.get("stem_pos"):
                     errors.append(
                         f"{prefix} (kind 'affix_stem_pos') requires params.stem_pos"

@@ -83,6 +83,14 @@ class DefaultAnalysisStrategy(interfaces.AnalysisStrategy):
             if morpheme.type in stem_type_ids:
                 lemma = morpheme.lemma or lemma
                 pos = morpheme.pos or pos
+        # Whole-word (closed-class) morphemes have no anchoring stem; fall back
+        # to the lemma/POS carried by such a morpheme itself.
+        if lemma is None or pos is None:
+            for morpheme in morphemes:
+                if lemma is None:
+                    lemma = morpheme.lemma
+                if pos is None:
+                    pos = morpheme.pos
         return MorphologicalAnalysis(
             surface=surface,
             normalized=normalized,

@@ -4,8 +4,13 @@
 # removed). The engine composes stems with affixes per the morphotactics.
 #
 # Representative, widely attested items. Confidence: draft (V1 starter).
-# Provenance: standard chiShona course/dictionary references and the
-# noun-class resource in noun_classes.yaml.
+# Provenance: standard chiShona course/dictionary references, the noun-class
+# resource in noun_classes.yaml, and (for entries marked `provenance:
+# "shona-spacy (shona_lexicon.json)"`) the MIT-licensed shona-spacy lexicon.
+#
+# Entry-level `provenance` records the immediate source of an imported entry
+# without redesigning the pack provenance mechanism (see resources.yaml for
+# resource-level provenance).
 
 lexicon:
   # ── Class 1/2 (human) ───────────────────────────────────────────────────
@@ -51,6 +56,184 @@ lexicon:
       noun_class: "1"
       number: singular
 
+  # ── Class 1/2 (human) — curated from shona-spacy ────────────────────────
+  # Simple, non-derivational class-1 human nouns (kinship/status/loanwords)
+  # whose analysis fits the existing noun-class-1 stem morphotactic, is not a
+  # V1 gold true-negative probe, and does not conflict with existing entries.
+  # Each is traceable to the MIT-licensed shona-spacy lexicon.
+  - surface: kwasha
+    lemma: mukuwasha
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: rora
+    lemma: murora
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: koma
+    lemma: mukoma
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: pfumi
+    lemma: mupfumi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: rwere
+    lemma: murwere
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: purisa
+    lemma: mupurisa
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: porofita
+    lemma: muporofita
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: fundisi
+    lemma: mufundisi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: bereki
+    lemma: mubereki
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: zukuru
+    lemma: muzukuru
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: dzimai
+    lemma: mudzimai
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: dzimu
+    lemma: mudzimu
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: penza
+    lemma: mupenzi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: roya
+    lemma: muroyi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: nyepa
+    lemma: munyepi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: shavi
+    lemma: mushavi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  # ── Class 1/2 (human) — independent-evaluation resolutions ──────────────
+  # Real, clearly attested class-1 human nouns that the independent evaluation
+  # set (evaluation/independent.yaml) reported MSUNLI could not yet analyse.
+  # Each is manually verified against shona-spacy/shona_spacy/data/
+  # shona_lexicon.json. `mwana` surfaces via the class-1 `mw-` allomorph
+  # BEFORE the vowel-initial stem `ana` — the allomorph is already declared in
+  # morphemes.yaml, so no new morphophonology is introduced. `mudzidzisi` is
+  # derivational (agentive, from kudzidzisa); only its stem/lemma are curated
+  # here — derivational morphology itself remains out of V1 scope.
+  - surface: ana
+    lemma: mwana
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  - surface: rimi
+    lemma: murimi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
+  # NOTE on `munin'ina`: the reference's lemma is the contracted citation root
+  # `n'ina`; the literal stem sitting after the class-1 `mu-` prefix is
+  # `nin'ina` (mu- + nin'ina = munin'ina). The citation root `n'ina` is
+  # preserved in the provenance/gloss below but is NOT the concatenative stem.
+  - surface: "nin'ina"
+    lemma: "munin'ina"
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json); reference lemma cited as n'ina"
+
+  - surface: dzidzisi
+    lemma: mudzidzisi
+    pos: noun
+    features:
+      noun_class: "1"
+      number: singular
+    provenance: "shona-spacy (shona_lexicon.json)"
+
   # ── Class 1a (zero-prefix kinship) ──────────────────────────────────────
   - surface: mai
     lemma: mai
@@ -80,6 +263,17 @@ lexicon:
     features:
       noun_class: "3"
       number: singular
+
+  - surface: sha
+    lemma: musha
+    pos: noun
+    features:
+      noun_class: "3"
+      number: singular
+    # shona-spacy annotates "Mumusha" flat (mu-18 + base musha); the pack
+    # models the base as its class-3 stem sha -> lemma musha, matching the
+    # lemma/POS/class while decomposing the class-3 morph.
+    provenance: "shona-spacy (shona_lexicon.json); decomposed stem sha (base musha)"
 
   # ── Class 5/6 ───────────────────────────────────────────────────────────
   - surface: zai

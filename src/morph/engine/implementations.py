@@ -44,19 +44,35 @@ class DefaultFeatureUnifier(interfaces.FeatureUnifier):
     value directly (e.g. the plural class marked by a plural prefix), so it
     takes precedence over the stem's lemma-level value. Stems identified via
     the pack's ``sources_lexicon`` morphemes therefore yield to affixes for
-    these keys; everything else follows the usual later-wins merge.
+    these keys.
+
+    For stacked prefixes, the OUTERMOST (leftmost) prefix heads these features:
+    the outer marker determines the surface noun class, so in ``ku-chi-koro``
+    the analysis is class 17, not the inner class 7 (nor the stem's). Prefix
+    ordering is surface-token order (prefixes precede the stem); suffixes still
+    merge later-wins, so a plural suffix still overrides a singular stem.
     """
 
     _PREFIX_HEADED_FEATURES = frozenset({"noun_class", "number"})
 
     def unify(self, morphemes: list[Morpheme], pack: LanguagePack) -> dict[str, object]:
         stem_type_ids = {m.id for m in pack.morphemes if m.sources_lexicon}
+        stem_idx = next(
+            (i for i, m in enumerate(morphemes) if m.type in stem_type_ids),
+            len(morphemes),
+        )
         merged: dict[str, object] = {}
-        for morpheme in morphemes:
+        for i, morpheme in enumerate(morphemes):
             is_stem = morpheme.type in stem_type_ids
             for key, value in morpheme.features.items():
-                if is_stem and key in self._PREFIX_HEADED_FEATURES and key in merged:
+                headed = key in self._PREFIX_HEADED_FEATURES
+                if not headed:
+                    merged[key] = value
                     continue
+                if is_stem and key in merged:
+                    continue  # stems yield to affixes for headed features
+                if i < stem_idx and key in merged:
+                    continue  # the outermost (leftmost) prefix heads these
                 merged[key] = value
         return merged
 
@@ -73,7 +89,12 @@ class DefaultConstraintValidator(interfaces.ConstraintValidator):
         means equal, or the stem's class is the declared ``singular_of`` or
         ``plural_of`` of the affix class. The pairings are read from the pack's
         ``noun_classes`` resource (declarative), so the engine knows nothing
-        specific to any particular language.
+        specific to any particular language. A pack may declare
+        ``params.outer_classes`` — locative/diminutive-style classes that are
+        exempt from agreement only when they stack EXTERNALLY over an inner
+        agreeing prefix (e.g. class 17 ``ku-`` over class 7 ``chi-`` in
+        ``ku-chi-koro``). A single such affix over a disagreeing stem is still
+        rejected, and non-exempt affixes must still agree.
       - ``affix_stem_pos``: restricts which noun class affixes may attach to a
         stem of a given POS. ``params.stem_pos`` names the POS and
         ``params.affix_classes`` lists the permitted class ids for noun class
@@ -146,7 +167,7 @@ class DefaultConstraintValidator(interfaces.ConstraintValidator):
             return not missing
         if constraint.kind == "noun_class_agreement":
             return DefaultConstraintValidator._noun_class_agreement(
-                candidate, stem_type_ids, class_pairings
+                candidate, stem_type_ids, class_pairings, constraint.params
             )
         if constraint.kind == "affix_stem_pos":
             return DefaultConstraintValidator._affix_stem_pos(
@@ -164,6 +185,7 @@ class DefaultConstraintValidator(interfaces.ConstraintValidator):
         candidate: MorphologicalAnalysis,
         stem_type_ids: set[str],
         class_pairings: dict[str, list[str]],
+        params: dict[str, Any],
     ) -> bool:
         stem_class: str | None = None
         affix_classes: list[str] = []
@@ -178,8 +200,19 @@ class DefaultConstraintValidator(interfaces.ConstraintValidator):
         if stem_class is None or not affix_classes:
             return True
 
+        # An outermost locative-style affix may override the stem's class, but
+        # ONLY when it stacks over an inner agreeing prefix (ku-chi-koro is a
+        # valid construction; a bare ku- over a class-7 stem is not). The exempt
+        # classes are declared per-pack via params.outer_classes; exemption
+        # applies to the left-most (outermost) affix and only when more than one
+        # affix is present, so every other affix still has to agree.
+        outer_classes = set(params.get("outer_classes", []) or [])
+        first_required = 0
+        if len(affix_classes) > 1 and affix_classes[0] in outer_classes:
+            first_required = 1
+
         allowed = set(class_pairings.get(stem_class, [stem_class]))
-        return all(ac in allowed for ac in affix_classes)
+        return all(ac in allowed for ac in affix_classes[first_required:])
 
     @staticmethod
     def _affix_stem_pos(
@@ -309,13 +342,26 @@ class ConcatenativeCandidateGenerator(interfaces.CandidateGenerator):
       the morpheme's declared ``aliases`` (surface realizations).
     - **optional tokens** may be skipped.
 
+    In addition, closed-class entries (``pack.closed_class``) describe lexical
+    units with **no segmentation**. When the whole normalized surface matches a
+    closed-class entry exactly, that single whole-word candidate is returned
+    and no affixal segmentation is attempted.
+
     All valid segmentations that cover the entire surface form are yielded;
     ambiguity is never silently discarded.
     """
 
+    #: Type id assigned to whole-word closed-class morphemes in analyses. This
+    #: is a generic engine concept, not a language-pack-defined morpheme id.
+    CLOSED_CLASS_TYPE = "closed_class"
+
     def generate(
         self, surface: str, normalized: str, pack: LanguagePack
     ) -> list[list[Morpheme]]:
+        closed_class = self._closed_class_candidate(normalized, pack)
+        if closed_class is not None:
+            return [[closed_class]]
+
         morpheme_index = _build_morpheme_index(pack)
         lexicon_stems = self._build_lexicon_stem_index(pack)
 
@@ -335,6 +381,26 @@ class ConcatenativeCandidateGenerator(interfaces.CandidateGenerator):
                 all_candidates,
             )
         return all_candidates
+
+    @staticmethod
+    def _closed_class_candidate(
+        normalized: str, pack: LanguagePack
+    ) -> Morpheme | None:
+        """Return a whole-word morpheme when ``normalized`` is a closed-class entry.
+
+        Closed-class items are single lexical units: the morpheme carries the
+        entry's lemma/POS/features and equals the whole surface span.
+        """
+        for entry in pack.closed_class:
+            if entry.surface == normalized:
+                return Morpheme(
+                    surface=normalized,
+                    type=ConcatenativeCandidateGenerator.CLOSED_CLASS_TYPE,
+                    lemma=entry.lemma or normalized,
+                    pos=entry.pos,
+                    features=dict(entry.features),
+                )
+        return None
 
     @staticmethod
     def _build_lexicon_stem_index(

@@ -26,6 +26,7 @@ _SECTION_FILES: dict[str, str] = {
     "manifest": "metadata",  # metadata is required
     "normalization": "normalization",
     "lexicon": "lexicon",
+    "closed_class": "closed_class",
     "morphemes": "morphemes",
     "morphotactics": "morphotactics",
     "paradigms": "paradigms",
