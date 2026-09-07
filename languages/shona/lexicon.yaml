@@ -338,6 +338,18 @@ lexicon:
     features:
       noun_class: "7"
 
+  # ── Class 11 (ru-/rw-) ──────────────────────────────────────────────────
+  - surface: izi
+    lemma: rwizi
+    pos: noun
+    features:
+      noun_class: "11"
+      number: singular
+    # shona-spacy annotates "Murwizi" flat (mu-18 + base rwizi); the pack
+    # decomposes the base as class-11 rw- + stem izi -> lemma rwizi, matching
+    # the reference lemma/POS/class (base class 11 per Fortune (1984)).
+    provenance: "shona-spacy (shona_lexicon.json); decomposed stem izi (base rwizi)"
+
   # ── Class 12/13 (diminutive) ────────────────────────────────────────────
   - surface: vana
     lemma: kavana

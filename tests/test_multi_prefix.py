@@ -34,6 +34,7 @@ MULTI_PREFIX_RULE_IDS = {
     "locative-17-over-class-7": "noun-class-17 noun-class-7 stem",
     "locative-18-over-class-1": "noun-class-18 noun-class-1 stem",
     "locative-18-over-class-3": "noun-class-18 noun-class-3 stem",
+    "locative-18-over-class-11": "noun-class-18 noun-class-11 stem",
     "diminutive-12-over-class-1": "noun-class-12 noun-class-1 stem",
 }
 
@@ -342,9 +343,29 @@ def test_shona_stacked_locative_nominal_prefixes_analyse(
     assert analysis.features["noun_class"] == "18"
     assert analysis.features["number"] == "singular"
 
+    murwizi = shona_service.analyze("murwizi", "sn")
+    assert murwizi.status == AnalysisStatus.ANALYSED
+    analysis = murwizi.analyses[0]
+    assert [m.type for m in analysis.morphemes] == [
+        "noun-class-18",
+        "noun-class-11",
+        "stem",
+    ]
+    assert [m.surface for m in analysis.morphemes] == ["mu", "rw", "izi"]
+    assert analysis.lemma == "rwizi"
+    assert analysis.features["noun_class"] == "18"
+    assert analysis.features["number"] == "singular"
+
     kamukadzi = shona_service.analyze("kamukadzi", "sn")
     assert kamukadzi.status == AnalysisStatus.UNKNOWN_WORD, "kamukadzi"
     assert kamukadzi.analyses == [], "kamukadzi"
+
+
+def test_shona_class_11_keeps_ru_allomorph() -> None:
+    """The declarative class-11 allomorph set preserves `ru` alongside `rw`."""
+    pack = load_language_pack(SHONA_DIR)
+    aliases = {m.id: m.aliases for m in pack.morphemes}
+    assert aliases["noun-class-11"] == ["ru", "rw"]
 
 
 def test_shona_single_prefix_nouns_unchanged(shona_service: AnalysisService) -> None:

@@ -178,7 +178,7 @@ noun_classes:
   - identifier: "11"
     label: "ru-"
     prefixes: ["ru-"]
-    surface_allomorphs: ["ru"]
+    surface_allomorphs: ["ru", "rw"]
     has_zero_prefix: false
     # Class 11 commonly pairs with class 10 for plural.
     plural_of: "10"

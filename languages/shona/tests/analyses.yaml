@@ -216,10 +216,10 @@
 # The conjugated verb `ndaenda` above is the pack's working two-prefix
 # structure: nd- (sagr-1sg) + a- (tam-perfect) + stem.
 # Stacked nominal-prefix rules (ku-17+chi-7+stem, mu-18+mu-1+stem, mu-18+mu-3+stem,
-# ka-12+mu-1+stem): the outer locative classes 17/18 are declared exempt in
-# constraints.yaml (outer_classes), so ku-chi-koro, mu-mu-rume and mu-mu-sha
-# analyse with the outer class heading the surface. Class 12 (diminutive) is
-# NOT exempt, so ka-mu-kadzi stays unknown_word.
+# mu-18+rw-11+stem, ka-12+mu-1+stem): the outer locative classes 17/18 are
+# declared exempt in constraints.yaml (outer_classes), so ku-chi-koro,
+# mu-mu-rume, mu-mu-sha and mu-rw-izi analyse with the outer class heading the
+# surface. Class 12 (diminutive) is NOT exempt, so ka-mu-kadzi stays unknown_word.
 - surface: kuchikoro
   status: analysed
   analyses:
@@ -233,6 +233,13 @@
     - pos: noun
       lemma: musha
       morphemes: [{surface: mu, type: noun-class-18}, {surface: mu, type: noun-class-3}, {surface: sha, type: stem}]
+      features: {noun_class: "18", number: singular}
+- surface: murwizi
+  status: analysed
+  analyses:
+    - pos: noun
+      lemma: rwizi
+      morphemes: [{surface: mu, type: noun-class-18}, {surface: rw, type: noun-class-11}, {surface: izi, type: stem}]
       features: {noun_class: "18", number: singular}
 - surface: kamukadzi
   status: unknown_word

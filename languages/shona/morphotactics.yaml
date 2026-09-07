@@ -71,19 +71,22 @@ morphotactics:
   # Stacked nominal prefixes: an outer locative/diminutive prefix slot in
   # front of an inner noun-class prefix slot, then the stem. Same explicit
   # sequential-slot grammar — the engine stacks any number of prefix slots
-  # before the anchoring stem (ku-chi-koro, mu-mu-rume, mu-mu-sha, ka-mu-kadzi).
+  # before the anchoring stem (ku-chi-koro, mu-mu-rume, mu-mu-sha, mu-rw-izi,
+  # ka-mu-kadzi).
   #
   # The generic noun-class-agreement constraint treats locative classes 16/17/18
   # (declared in constraints.yaml outer_classes) as valid OUTER substitutes when
   # they stack over an inner agreeing prefix, so ku-chi-koro (class 17 over
-  # class 7), mu-mu-rume (class 18 over class 1) and mu-mu-sha (class 18 over
-  # class 3) analyse. The diminutive class 12 is not an exempt outer class, so
-  # ka-mu-kadzi is still rejected.
+  # class 7), mu-mu-rume (class 18 over class 1), mu-mu-sha (class 18 over
+  # class 3) and mu-rw-izi (class 18 over class 11) analyse. The diminutive
+  # class 12 is not an exempt outer class, so ka-mu-kadzi is still rejected.
   - id: locative-17-over-class-7
     sequence: "noun-class-17 noun-class-7 stem"   # ku- + chi- + stem  (eg ku-chi-koro)
   - id: locative-18-over-class-1
     sequence: "noun-class-18 noun-class-1 stem"   # mu- + mu- + stem   (eg mu-mu-rume)
   - id: locative-18-over-class-3
     sequence: "noun-class-18 noun-class-3 stem"   # mu- + mu- + stem   (eg mu-mu-sha)
+  - id: locative-18-over-class-11
+    sequence: "noun-class-18 noun-class-11 stem"  # mu- + rw- + stem   (eg mu-rw-izi)
   - id: diminutive-12-over-class-1
     sequence: "noun-class-12 noun-class-1 stem"   # ka- + mu- + stem   (eg ka-mu-kadzi)

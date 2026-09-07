@@ -116,9 +116,10 @@ morphemes:
       noun_class: "10"
       number: plural
 
-  # Class 11 (sg).
+  # Class 11 (sg). Allomorphs of class 11: ru- / rw- (the glide appears
+  # before vowel-initial stems, e.g. rw-izi).
   - id: noun-class-11
-    aliases: ["ru"]
+    aliases: ["ru", "rw"]
     sources_lexicon: false
     features:
       noun_class: "11"
