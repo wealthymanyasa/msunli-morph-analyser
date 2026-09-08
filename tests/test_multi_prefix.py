@@ -50,12 +50,8 @@ def _with_multi_prefix(pack: LanguagePack) -> LanguagePack:
             ],
             "morphemes": [
                 MorphemeSpec(id="root", sources_lexicon=True, aliases=[], features={}),
-                MorphemeSpec(
-                    id="pre1", aliases=["ka"], features={"position": "outer"}
-                ),
-                MorphemeSpec(
-                    id="pre2", aliases=["mu"], features={"position": "inner"}
-                ),
+                MorphemeSpec(id="pre1", aliases=["ka"], features={"position": "outer"}),
+                MorphemeSpec(id="pre2", aliases=["mu"], features={"position": "inner"}),
             ],
             "morphotactics": [
                 MorphotacticRule(sequence="pre1 pre2 root", id="two-prefix-noun"),

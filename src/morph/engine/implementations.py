@@ -383,9 +383,7 @@ class ConcatenativeCandidateGenerator(interfaces.CandidateGenerator):
         return all_candidates
 
     @staticmethod
-    def _closed_class_candidate(
-        normalized: str, pack: LanguagePack
-    ) -> Morpheme | None:
+    def _closed_class_candidate(normalized: str, pack: LanguagePack) -> Morpheme | None:
         """Return a whole-word morpheme when ``normalized`` is a closed-class entry.
 
         Closed-class items are single lexical units: the morpheme carries the

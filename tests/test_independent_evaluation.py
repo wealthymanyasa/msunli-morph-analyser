@@ -87,9 +87,7 @@ def test_agree_records_are_reported_not_silently_failed(
     # the reported failures correspond to the known divergent cases.
     records = load_dataset(INDEPENDENT)
     report = run_evaluation(shona_service, "sn", INDEPENDENT)
-    agree_surfaces = {
-        r.surface for r in records if r.verification_status == "agree"
-    }
+    agree_surfaces = {r.surface for r in records if r.verification_status == "agree"}
     failed_surfaces = {f["surface"] for f in report.failures}
     # No 'agree' record should be a failure: those are the reproduced cases.
     assert agree_surfaces.isdisjoint(failed_surfaces)
