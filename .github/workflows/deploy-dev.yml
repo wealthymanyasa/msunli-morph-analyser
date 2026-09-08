@@ -1,0 +1,40 @@
+name: Deploy to Dev
+
+on:
+  push:
+    branches: [dev]
+
+permissions:
+  contents: read
+
+env:
+  COMPOSE_FILE: docker-compose.dev.yml
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, dev]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and deploy
+        run: |
+          docker compose -f docker-compose.dev.yml up -d --build --remove-orphans
+
+      - name: Wait for health check
+        run: |
+          echo "Waiting for morph-api to become healthy..."
+          for i in $(seq 1 30); do
+            if docker inspect --format='{{.State.Health.Status}}' morph-analyser-dev 2>/dev/null | grep -q healthy; then
+              echo "✅ morph-analyser-dev is healthy"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "⚠️ Health check timed out — showing container logs:"
+          docker logs morph-analyser-dev --tail 30
+          exit 1
+
+      - name: Show container status
+        if: always()
+        run: docker ps --filter name=morph-analyser-dev --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"

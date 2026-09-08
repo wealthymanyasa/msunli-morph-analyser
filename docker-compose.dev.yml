@@ -1,0 +1,20 @@
+services:
+  morph-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: morph-analyser-dev
+    ports:
+      - "8002:8000"
+    environment:
+      - MORPH_LANGUAGES_DIR=/app/languages
+      - MORPH_LOG_LEVEL=DEBUG
+    volumes:
+      - ./languages:/app/languages:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
